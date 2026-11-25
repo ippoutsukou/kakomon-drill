@@ -1,0 +1,1222 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="description" content="愛知県立中高一貫校の適性検査をめざす小学生向け、オリジナル問題のドリル・模試・成績アドバイス">
+<title>てきせい検査ドリル</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800&family=Zen+Maru+Gothic:wght@500;700&display=swap">
+<style>
+/* レイアウト：ノートの方眼の上に、1列の大きなカードを並べる（最大幅760px） */
+:root {
+  --bg: #eef5fb;
+  --grid: rgba(42, 134, 214, 0.08);
+  --paper: #ffffff;
+  --ink: #1d2f44;
+  --muted: #566c82;
+  --line: #d3e2ef;
+  --sky: #2a86d6;
+  --sun: #ffc83d;
+  --coral: #ff7a59;
+  --ok: #1f9d55;
+  --ng: #d6453d;
+  --c-kokugo: #e0484d;
+  --c-shakai: #2a9a58;
+  --c-rika: #2a86d6;
+  --c-sansu: #8257e6;
+  --c-kangaeru: #e8830f;
+  --shadow: 0 3px 0 rgba(29, 47, 68, 0.12);
+  --font-display: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "BIZ UDPGothic", "Meiryo", sans-serif;
+  --font-body: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "BIZ UDPGothic", "Meiryo", sans-serif;
+  --radius: 20px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1a26; --grid: rgba(120, 180, 240, 0.06); --paper: #172535; --ink: #e8f0f8; --muted: #9fb3c6; --line: #2b3f55;
+    --sky: #5aa9f0; --sun: #ffd25e; --coral: #ff9473; --ok: #4cc884; --ng: #ff6f66;
+    --c-kokugo: #ff7276; --c-shakai: #4fc47f; --c-rika: #5aa9f0; --c-sansu: #a98bff; --c-kangaeru: #ffa84a;
+    --shadow: 0 3px 0 rgba(0, 0, 0, 0.35); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1a26; --grid: rgba(120, 180, 240, 0.06); --paper: #172535; --ink: #e8f0f8; --muted: #9fb3c6; --line: #2b3f55;
+  --sky: #5aa9f0; --sun: #ffd25e; --coral: #ff9473; --ok: #4cc884; --ng: #ff6f66;
+  --c-kokugo: #ff7276; --c-shakai: #4fc47f; --c-rika: #5aa9f0; --c-sansu: #a98bff; --c-kangaeru: #ffa84a;
+  --shadow: 0 3px 0 rgba(0, 0, 0, 0.35); color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background-color: var(--bg);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.75;
+  -webkit-text-size-adjust: 100%;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+h1, h2, h3, .display { font-family: var(--font-display); text-wrap: balance; line-height: 1.35; }
+h1, h2, h3, p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+ruby rt { font-size: 0.5em; font-family: var(--font-body); color: var(--muted); }
+.no-furi ruby rt { display: none; }
+
+.topbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--paper); border-bottom: 2px solid var(--line);
+  padding-block: 8px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.topbar-in { max-width: 760px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 8px; background: none; border: 0; padding: 4px; cursor: pointer; font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--ink); min-height: 44px; }
+.brand svg { width: 34px; height: 34px; flex: none; }
+.spacer { flex: 1; }
+.toggle { display: flex; align-items: center; gap: 8px; border: 2px solid var(--line); background: var(--paper); border-radius: 999px; padding: 4px 12px 4px 6px; min-height: 44px; cursor: pointer; font-size: 15px; font-weight: 700; }
+.toggle .dot { width: 34px; height: 22px; border-radius: 999px; background: var(--line); position: relative; transition: background .2s; }
+.toggle .dot::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--paper); transition: transform .2s; }
+.toggle[aria-pressed="true"] .dot { background: var(--sky); }
+.toggle[aria-pressed="true"] .dot::after { transform: translateX(12px); }
+
+main {
+  max-width: 760px; margin: 0 auto;
+  padding-block: 20px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 18px;
+}
+.card { background: var(--paper); border: 2px solid var(--line); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); min-width: 0; }
+.stack { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.muted { color: var(--muted); }
+.small { font-size: 15px; }
+.eyebrow { font-family: var(--font-display); font-weight: 800; font-size: 14px; letter-spacing: 0.06em; color: var(--muted); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 52px; padding: 10px 22px; border-radius: 16px; border: 2px solid transparent;
+  font-family: var(--font-display); font-weight: 800; font-size: 18px; cursor: pointer; text-align: center;
+  background: var(--sky); color: #fff; box-shadow: 0 4px 0 color-mix(in srgb, var(--sky) 60%, #000);
+  transition: transform .08s;
+}
+.btn:active { transform: translateY(3px); box-shadow: 0 1px 0 color-mix(in srgb, var(--sky) 60%, #000); }
+.btn.sun { background: var(--sun); color: #3a2a00; box-shadow: 0 4px 0 color-mix(in srgb, var(--sun) 65%, #000); }
+.btn.ghost { background: var(--paper); color: var(--ink); border-color: var(--line); box-shadow: var(--shadow); }
+.btn[disabled] { opacity: .45; cursor: not-allowed; transform: none; }
+.btn.wide { width: 100%; }
+
+/* ホーム */
+.hello { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; }
+.hello .pico { width: 96px; height: 96px; }
+.bubble { position: relative; background: color-mix(in srgb, var(--sun) 22%, var(--paper)); border: 2px solid color-mix(in srgb, var(--sun) 70%, var(--line)); border-radius: 18px; padding: 12px 16px; font-weight: 700; }
+.bubble::before { content: ""; position: absolute; left: -10px; top: 24px; border: 8px solid transparent; border-right-color: color-mix(in srgb, var(--sun) 70%, var(--line)); border-left: 0; }
+.starcount { font-family: var(--font-display); font-weight: 800; font-size: 28px; color: color-mix(in srgb, var(--sun) 55%, var(--ink)); font-variant-numeric: tabular-nums; }
+.menu { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.menu-btn {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left;
+  background: var(--paper); border: 2px solid var(--line); border-radius: var(--radius); padding: 18px; min-height: 140px;
+  cursor: pointer; box-shadow: 0 4px 0 color-mix(in srgb, var(--c) 45%, var(--line)); border-top: 8px solid var(--c);
+}
+.menu-btn:active { transform: translateY(3px); }
+.menu-btn .t { font-family: var(--font-display); font-weight: 800; font-size: 21px; }
+.menu-btn .d { font-size: 15px; color: var(--muted); line-height: 1.6; }
+.notice { border: 2px dashed var(--coral); border-radius: 14px; padding: 10px 14px; color: var(--ink); background: color-mix(in srgb, var(--coral) 10%, var(--paper)); font-size: 15px; }
+
+/* ドリルをえらぶ */
+.seg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.seg button { min-height: 60px; border-radius: 14px; border: 2px solid var(--line); background: var(--paper); cursor: pointer; font-family: var(--font-display); font-weight: 800; font-size: 16px; line-height: 1.3; padding: 6px; }
+.seg button[aria-pressed="true"] { background: color-mix(in srgb, var(--sun) 30%, var(--paper)); border-color: color-mix(in srgb, var(--sun) 80%, var(--ink)); }
+.seg .stars { display: block; color: color-mix(in srgb, var(--sun) 60%, var(--ink)); letter-spacing: 0.1em; }
+.subjects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.subject {
+  text-align: left; cursor: pointer; background: color-mix(in srgb, var(--c) 9%, var(--paper));
+  border: 2px solid color-mix(in srgb, var(--c) 45%, var(--line)); border-radius: var(--radius); padding: 16px; min-height: 120px;
+  display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 0 color-mix(in srgb, var(--c) 40%, var(--line));
+}
+.subject:active { transform: translateY(3px); }
+.subject .name { font-family: var(--font-display); font-weight: 800; font-size: 22px; color: color-mix(in srgb, var(--c) 80%, var(--ink)); }
+.subject ul { margin: 0; padding: 0; list-style: none; font-size: 15px; display: flex; flex-direction: column; gap: 2px; }
+.subject li { display: flex; justify-content: space-between; gap: 8px; }
+.subject li span:last-child { font-variant-numeric: tabular-nums; color: var(--muted); }
+
+/* もんだい */
+.progress { display: flex; align-items: center; gap: 12px; }
+.bar { flex: 1; height: 12px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.bar > i { display: block; height: 100%; background: var(--sun); border-radius: 999px; }
+.tag { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 2px 12px; font-size: 14px; font-weight: 700; background: color-mix(in srgb, var(--c) 14%, var(--paper)); color: color-mix(in srgb, var(--c) 75%, var(--ink)); border: 1.5px solid color-mix(in srgb, var(--c) 40%, var(--line)); }
+.qtext { font-size: 19px; font-weight: 700; }
+.qtext p + p { margin-top: 6px; }
+.box { border: 2px solid var(--line); border-radius: 14px; padding: 12px 16px; background: color-mix(in srgb, var(--sky) 5%, var(--paper)); }
+.box .bt { font-weight: 700; font-size: 15px; color: var(--muted); margin-bottom: 4px; }
+.box p + p { margin-top: 4px; }
+.tablewrap { overflow-x: auto; }
+table.data { border-collapse: collapse; min-width: 100%; font-size: 16px; font-variant-numeric: tabular-nums; }
+table.data th, table.data td { border: 1.5px solid var(--line); padding: 6px 10px; text-align: center; white-space: nowrap; }
+table.data th { background: color-mix(in srgb, var(--sky) 10%, var(--paper)); font-weight: 700; }
+table.grid { border-collapse: collapse; margin: 0 auto; }
+table.grid td { width: 56px; height: 56px; border: 2px solid var(--ink); text-align: center; font-family: var(--font-display); font-weight: 800; font-size: 22px; }
+table.grid td.s { background: color-mix(in srgb, var(--sun) 35%, var(--paper)); }
+.part { display: flex; flex-direction: column; gap: 8px; }
+.part-label { font-family: var(--font-display); font-weight: 800; font-size: 17px; }
+.part-hint { font-size: 14px; color: var(--muted); font-weight: 700; }
+.choices { display: grid; gap: 10px; grid-template-columns: minmax(0, 1fr); }
+.choices.short { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.choice {
+  display: flex; align-items: flex-start; gap: 12px; text-align: left; cursor: pointer;
+  min-height: 56px; padding: 10px 14px; border-radius: 16px;
+  background: var(--paper); border: 2px solid var(--line); box-shadow: var(--shadow); font-size: 17px; line-height: 1.6;
+}
+.choice .k { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--line); font-family: var(--font-display); font-weight: 800; font-size: 16px; }
+.choice .ct { padding-top: 3px; min-width: 0; }
+.choice[aria-pressed="true"] { border-color: var(--sky); background: color-mix(in srgb, var(--sky) 12%, var(--paper)); }
+.choice[aria-pressed="true"] .k { background: var(--sky); border-color: var(--sky); color: #fff; }
+.choice.correct { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 13%, var(--paper)); }
+.choice.correct .k { background: var(--ok); border-color: var(--ok); color: #fff; }
+.choice.wrong { border-color: var(--ng); background: color-mix(in srgb, var(--ng) 10%, var(--paper)); }
+.choice.wrong .k { background: var(--ng); border-color: var(--ng); color: #fff; }
+.choice[disabled] { cursor: default; }
+.choice .mark { margin-left: auto; font-weight: 800; flex: none; padding-top: 3px; }
+.feedback { border-radius: var(--radius); padding: 16px 18px; border: 2px solid; display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; }
+.feedback.ok { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, var(--paper)); }
+.feedback.ng { border-color: var(--ng); background: color-mix(in srgb, var(--ng) 8%, var(--paper)); }
+.feedback .pico { width: 72px; height: 72px; }
+.feedback .verdict { font-family: var(--font-display); font-weight: 800; font-size: 24px; }
+.feedback.ok .verdict { color: var(--ok); }
+.feedback.ng .verdict { color: var(--ng); }
+.burst { position: relative; }
+.burst i { position: absolute; left: 50%; top: 50%; width: 12px; height: 12px; background: var(--sun); clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); opacity: 0; animation: pop .8s ease-out forwards; }
+@keyframes pop { 0% { opacity: 1; transform: translate(-50%, -50%) scale(.4); } 100% { opacity: 0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.4); } }
+.bigscore { font-family: var(--font-display); font-weight: 800; font-size: 56px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.bigscore small { font-size: 24px; color: var(--muted); }
+.reslist { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.reslist li { display: flex; gap: 10px; align-items: center; border: 2px solid var(--line); border-radius: 14px; padding: 8px 12px; }
+.reslist .om { font-family: var(--font-display); font-weight: 800; font-size: 20px; width: 28px; text-align: center; flex: none; }
+.om.o { color: var(--ok); } .om.x { color: var(--ng); }
+
+/* 模試 */
+.timerbar { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 62px); z-index: 4; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--paper); border: 2px solid var(--line); border-radius: 16px; padding: 8px 14px; box-shadow: var(--shadow); }
+.timerbar .time { font-family: var(--font-display); font-weight: 800; font-size: 24px; font-variant-numeric: tabular-nums; }
+.timerbar.low { border-color: var(--coral); }
+.timerbar.low .time { color: var(--coral); }
+.section-head { display: flex; gap: 12px; align-items: flex-start; }
+.section-no { flex: none; width: 40px; height: 40px; border: 2.5px solid var(--ink); border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: 20px; }
+.qno { font-family: var(--font-display); font-weight: 800; margin-right: 6px; }
+.mq { border-top: 2px dashed var(--line); padding-top: 16px; }
+details.review { border: 2px solid var(--line); border-radius: 14px; padding: 8px 14px; }
+details.review summary { cursor: pointer; font-weight: 700; display: flex; gap: 10px; align-items: center; min-height: 40px; }
+details.review[open] summary { margin-bottom: 8px; }
+.pts { margin-left: auto; font-variant-numeric: tabular-nums; font-family: var(--font-display); font-weight: 800; }
+
+/* せいせき */
+.stats3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.stat { border: 2px solid var(--line); border-radius: 16px; padding: 12px; text-align: center; }
+.stat b { display: block; font-family: var(--font-display); font-size: 28px; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.stat span { font-size: 14px; color: var(--muted); }
+.rec { border: 2px solid color-mix(in srgb, var(--c) 45%, var(--line)); border-left: 10px solid var(--c); border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.rec h3 { font-size: 20px; }
+.rec ul { margin: 0; padding-left: 1.2em; }
+.rec .parent { font-size: 15px; color: var(--muted); }
+.fieldbars { display: flex; flex-direction: column; gap: 14px; }
+.fb-sub { display: flex; flex-direction: column; gap: 6px; }
+.fb-row { display: grid; grid-template-columns: minmax(0, 9em) 1fr 4.5em; gap: 10px; align-items: center; font-size: 15px; }
+.fb-row .bar > i { background: var(--c); }
+.pill { display: inline-block; border-radius: 999px; padding: 0 10px; font-size: 13px; font-weight: 700; border: 1.5px solid var(--line); white-space: nowrap; text-align: center; }
+.pill.weak { border-color: var(--ng); color: var(--ng); }
+.pill.almost { border-color: color-mix(in srgb, var(--sun) 70%, var(--ink)); color: color-mix(in srgb, var(--sun) 50%, var(--ink)); }
+.pill.good { border-color: var(--ok); color: var(--ok); }
+.pill.new { color: var(--muted); }
+.plan { display: grid; gap: 10px; }
+.plan > div { border-left: 4px solid var(--sky); padding: 2px 0 2px 12px; }
+input[type="text"] { font: inherit; min-height: 48px; border: 2px solid var(--line); border-radius: 12px; padding: 6px 12px; background: var(--paper); color: var(--ink); width: 12em; max-width: 100%; }
+table.hist { border-collapse: collapse; width: 100%; font-size: 15px; font-variant-numeric: tabular-nums; }
+table.hist th, table.hist td { border-bottom: 1.5px solid var(--line); padding: 6px 8px; text-align: left; white-space: nowrap; }
+
+/* 確認ダイアログ（ページ内） */
+.modal-back { position: fixed; inset: 0; z-index: 20; background: rgba(10, 20, 30, 0.45); display: flex; align-items: center; justify-content: center; padding: 16px; }
+.modal { background: var(--paper); border-radius: var(--radius); border: 2px solid var(--line); padding: 22px; max-width: 420px; width: 100%; display: flex; flex-direction: column; gap: 16px; }
+.modal .row { justify-content: flex-end; }
+
+@media (max-width: 720px) {
+  .menu { grid-template-columns: minmax(0, 1fr); }
+  .menu-btn { min-height: 0; }
+  .subjects { grid-template-columns: minmax(0, 1fr); }
+  .stats3 .stat b { font-size: 22px; }
+  .hello .pico { width: 72px; height: 72px; }
+  .fb-row { grid-template-columns: minmax(0, 7em) 1fr 4.2em; }
+}
+@media (max-width: 420px) {
+  .brand { font-size: 17px; white-space: nowrap; }
+  .brand svg { width: 28px; height: 28px; }
+  .toggle { white-space: nowrap; padding-right: 10px; font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="brand" type="button" data-act="nav-home" aria-label="ホームへ">
+      <span id="brand-pico"></span><span>てきせい検査ドリル</span>
+    </button>
+    <span class="spacer"></span>
+    <button class="toggle" type="button" id="furi-toggle" data-act="furigana" aria-pressed="true">
+      <span class="dot" aria-hidden="true"></span>ふりがな
+    </button>
+  </div>
+</header>
+<main id="app" aria-live="polite"></main>
+<div id="modal-root"></div>
+
+<script>
+const DATA = {"DRILL":[{"id":"kotoba-1-a","field":"kotoba","level":1,"text":"（　）に入る言葉として、いちばん合うものをえらびましょう。","box":{"text":"雨がふってきた。（　）、かさをさして出かけた。"},"parts":[{"choices":["しかし","だから","または","ところで"],"answer":1}],"explain":"「雨がふってきた」ことが理由で「かさをさした」ので、理由と結果をつなぐ「だから」が入ります。"},{"id":"kotoba-1-b","field":"kotoba","level":1,"text":"「ねこの手もかりたい」は、どんな様子をあらわす言葉でしょう。","parts":[{"choices":["ねこがとてもすきだ","ひまで何もすることがない","とてもいそがしい","手先がきようだ"],"answer":2}],"explain":"役に立ちそうにないねこの手でもかりたいほど、いそがしいという意味です。"},{"id":"kotoba-2-a","field":"kotoba","level":2,"text":"「ねこにこばん」の使い方として正しい文をえらびましょう。","parts":[{"choices":["ねこにこばんをあげたら、ねこがとてもよろこんだ。","ピアノをひかない弟に高いピアノを買っても、ねこにこばんだ。","ねこにこばんで、二人はとてもよく{似|に}ている。","ねこにこばんのように、すばやく走った。"],"answer":1}],"explain":"「ねこにこばん」は、ねうちが分からない人にりっぱなものをあげても役に立たない、という意味です。"},{"id":"kotoba-2-b","field":"kotoba","level":2,"text":"次の文で、「いそいで」がくわしくしている言葉をえらびましょう。","box":{"text":"小さな　白い　犬が　庭を　いそいで　走った。"},"parts":[{"choices":["犬が","庭を","白い","走った"],"answer":3}],"explain":"「どのように走った？」→「いそいで走った」とつながるので、「いそいで」は「走った」をくわしくしています。"},{"id":"kotoba-3-a","field":"kotoba","level":3,"text":"（A）（B）に入る言葉を、それぞれえらびましょう。","box":{"text":"先生がわたしの家に（A）。わたしは、先生のお話を（B）。"},"choices":["いらっしゃった","まいった","うかがった","おっしゃった"],"parts":[{"label":"A","answer":0},{"label":"B","answer":2}],"explain":"先生の動作は相手を高める言い方（{尊敬語|そんけいご}）で「いらっしゃった」。自分の動作は自分を低める言い方（{謙譲語|けんじょうご}）で「（お話を）うかがった」になります。"},{"id":"dokkai-1-a","field":"dokkai","level":1,"text":"文章を読んで答えましょう。ツバメが人の家ののき下に巣を作ることが多いのは、なぜだと書かれていますか。","box":{"text":"ツバメは、春になると南の国から日本にやってきます。人の家ののき下に巣を作ることが多いのは、カラスなどの{天敵|てんてき}が、人をこわがって近づきにくいからだと言われています。"},"parts":[{"choices":["えさの虫がたくさんいるから","雨にぬれないから","天敵が近づきにくいから","家の中があたたかいから"],"answer":2}],"explain":"本文に「カラスなどの天敵が、人をこわがって近づきにくいから」と書いてあります。答えは本文の中から見つけましょう。"},{"id":"dokkai-1-b","field":"dokkai","level":1,"text":"文章を書いた人がいちばん伝えたいことをえらびましょう。","box":{"text":"本を読むと、行ったことのない場所や、会ったことのない人の気持ちを知ることができます。物語の主人公といっしょに、わくわくしたり、なやんだりすることで、自分とはちがう考え方にも気づけるのです。だから、わたしは、毎日少しでも本を読むことをすすめたいと思います。"},"parts":[{"choices":["物語の主人公はいつもなやんでいる","行ったことのない場所へ旅行するとよい","毎日少しでも本を読むとよい","本は図書館で借りるとよい"],"answer":2}],"explain":"「だから、わたしは〜すすめたいと思います」という最後の文に、筆者の考えがまとまっています。「だから」のあとに注目しましょう。"},{"id":"dokkai-2-a","field":"dokkai","level":2,"text":"【文章1】【文章2】を読んだ4人の感想のうち、どちらの文章にも書かれていないことをふくむものをえらびましょう。","box":{"title":"【文章1】【文章2】","text":"【文章1】ミツバチは、花のみつや花粉を集めるとき、体についた花粉をほかの花に運びます。これによって、植物は実や種をつくることができます。\n【文章2】近年、{農薬|のうやく}や病気、すみかが減ることなどにより、ミツバチの数が減っている地域があります。ミツバチが減ると、イチゴやリンゴなどの実りにもえいきょうが出るおそれがあります。"},"parts":[{"choices":["ひろと「ミツバチは花粉を運んで、植物が実や種をつくるのを助けているんだね。」","さき「ミツバチが減ると、くだものの実りにもえいきょうが出るかもしれないね。」","こうた「農薬やすみかが減ることも、ミツバチが減る原因の一つなんだね。」","みお「ミツバチは冬のあいだも、花をさがして毎日飛び回っているんだね。」"],"answer":3}],"explain":"冬のミツバチの様子は、どちらの文章にも書かれていません。選たくしを1つずつ、本文のどこに書いてあるかたしかめるのがコツです。"},{"id":"dokkai-2-b","field":"dokkai","level":2,"text":"最後の一文から分かる、ゆうきの気持ちとしていちばん合うものをえらびましょう。","box":{"text":"リレーのバトンを落としてしまったゆうきは、ゴールしたあと、だれとも目を合わせられなかった。そのとき、アンカーのはるとが、ゆうきのかたをぽんとたたいて「次は、いっしょに練習しよう」と笑った。ゆうきは、こぶしをぎゅっとにぎって、大きくうなずいた。"},"parts":[{"choices":["リレーがきらいになってしまった","はるとにおこっている","次こそがんばろうと心に決めている","バトンを落としたことを気にしていない"],"answer":2}],"explain":"「こぶしをぎゅっとにぎって、大きくうなずいた」という動きから、はるとの言葉を受けて「次こそ」と決意していることが分かります。気持ちは動作や表情に表れます。"},{"id":"dokkai-3-a","field":"dokkai","level":3,"text":"①〜⑤の文を正しい順番に並べて、虹についての説明文を作ります。2番目と4番目にくる文の組み合わせをえらびましょう。","box":{"text":"① そのとき、光が色ごとに分かれて、七色の帯のように見えます。\n② 雨上がりに太陽を背にして空を見ると、虹が見えることがあります。\n③ 水のつぶに入った光は、中で曲がったり、はね返ったりします。\n④ これは、空気中に残った小さな水のつぶに、太陽の光が当たって起こるものです。\n⑤ 今度虹を見つけたら、太陽がどちらにあるかも確かめてみましょう。"},"parts":[{"choices":["2番目：③　4番目：①","2番目：④　4番目：①","2番目：④　4番目：③","2番目：①　4番目：③"],"answer":1}],"explain":"正しい順番は ②→④→③→①→⑤ です。「これは」「そのとき」のような指す言葉が、どの文を受けているかを手がかりにします。③の「水のつぶ」は、④で先に出てくる必要があります。"},{"id":"rekishi-1-a","field":"rekishi","level":1,"text":"3月3日に行われる年中行事をえらびましょう。","parts":[{"choices":["七夕","ひなまつり（{桃|もも}の{節句|せっく}）","節分","七五三"],"answer":1}],"explain":"3月3日はひなまつり（桃の節句）です。七夕は7月7日、節分は2月のはじめ、七五三は11月です。"},{"id":"rekishi-1-b","field":"rekishi","level":1,"text":"江戸時代に、子どもたちが読み書きやそろばんを習ったところをえらびましょう。","parts":[{"choices":["{正倉院|しょうそういん}","城","{寺子屋|てらこや}","国会"],"answer":2}],"explain":"寺子屋では、町や村の子どもたちが読み書き・そろばんを学びました。そのため江戸時代の日本は、文字を読める人の{割合|わりあい}が高かったと言われます。"},{"id":"rekishi-2-a","field":"rekishi","level":2,"text":"時代を古い順に正しく並べたものをえらびましょう。","parts":[{"choices":["平安時代 → 縄文時代 → 江戸時代 → 明治時代","縄文時代 → 江戸時代 → 平安時代 → 明治時代","縄文時代 → 平安時代 → 江戸時代 → 明治時代","江戸時代 → 平安時代 → 縄文時代 → 明治時代"],"answer":2}],"explain":"{縄文|じょうもん}（土器を使い始めた大昔）→ 平安（{貴族|きぞく}の時代・ひらがなが生まれた）→ 江戸（{将軍|しょうぐん}が治めた時代）→ 明治（近代化）の順です。"},{"id":"rekishi-2-b","field":"rekishi","level":2,"text":"1543年、{種子島|たねがしま}に{鉄砲|てっぽう}を伝えたのは、どこの国の人でしょう。","parts":[{"choices":["イギリス人","ポルトガル人","アメリカ人","オランダ人"],"answer":1}],"explain":"種子島に流れ着いた船に乗っていたポルトガル人が、鉄砲を伝えました。その後、鉄砲は日本の各地でつくられるようになりました。"},{"id":"rekishi-3-a","field":"rekishi","level":3,"text":"【年表】を見て、（A）（B）の答えをそれぞれえらびましょう。\n（A）鉄砲が伝わってから6年後の出来事\n（B）本能寺の変から江戸幕府が開かれるまでの年数","table":{"head":["年","主な出来事"],"rows":[["1543","鉄砲が伝わる"],["1549","キリスト教が伝わる"],["1582","本能寺の変"],["1590","{豊臣秀吉|とよとみひでよし}が全国を統一する"],["1603","江戸{幕府|ばくふ}が開かれる"]]},"parts":[{"label":"A","choices":["本能寺の変","キリスト教が伝わる","豊臣秀吉が全国を統一する","江戸幕府が開かれる"],"answer":1},{"label":"B","choices":["11年","21年","31年","41年"],"answer":1}],"explain":"（A）1543 + 6 = 1549年なので、キリスト教が伝わった年です。（B）1603 − 1582 = 21年です。年表の問題は、まず年の計算をしてから出来事をさがしましょう。"},{"id":"chiri-1-a","field":"chiri","level":1,"text":"日本の都道府県で、いちばん面積が小さいのはどこでしょう。","parts":[{"choices":["大阪府","東京都","{香川|かがわ}県","沖縄県"],"answer":2}],"explain":"いちばん面積が小さいのは香川県です。2番目が大阪府です。地図帳で場所もたしかめてみましょう。"},{"id":"chiri-1-b","field":"chiri","level":1,"text":"愛知県の{県庁所在地|けんちょうしょざいち}（県庁がある市）をえらびましょう。","parts":[{"choices":["豊田市","名古屋市","岡崎市","{刈谷|かりや}市"],"answer":1}],"explain":"愛知県の県庁は名古屋市にあります。自分の住む県の市町村の位置を、地図でたしかめておきましょう。"},{"id":"chiri-2-a","field":"chiri","level":2,"text":"使い終わったペットボトルを集めて、とかして新しい服のせんいの原料にすることは、3Rのどれでしょう。","parts":[{"choices":["リデュース（ごみを減らす）","リユース（くり返し使う）","リサイクル（資源としてもう一度使う）"],"answer":2}],"explain":"とかして原料にもどし、別のものに作り変えるのはリサイクルです。そのままくり返し使うのがリユース、ごみそのものを減らすのがリデュースです。"},{"id":"chiri-2-b","field":"chiri","level":2,"text":"国の法律をつくるところをえらびましょう。","parts":[{"choices":["内閣","裁判所","国会","市役所"],"answer":2}],"explain":"法律をつくるのは国会です。国会には{衆議院|しゅうぎいん}と{参議院|さんぎいん}があります。内閣は法律にもとづいて政治を行い、裁判所は争いごとを法律で裁きます。"},{"id":"chiri-3-a","field":"chiri","level":3,"text":"東経135度の兵庫県明石市で、太陽が真南にきました。東経140度の地点では、太陽が真南にきたのはおよそいつでしょう。","box":{"text":"地球は24時間で1回転（360度）するので、{経度|けいど}が15度ちがうと、太陽が真南にくる時刻は約1時間ずれます。東にある地点ほど、早く真南にきます。"},"parts":[{"choices":["約5分前","約20分前","約20分後","約1時間後"],"answer":1}],"explain":"経度のちがいは140 − 135 = 5度。15度で60分なので、5度は60 × 5 ÷ 15 = 20分。東経140度のほうが東にあるので、20分「前」に真南にきています。"},{"id":"shiryo-1-a","field":"shiryo","level":1,"text":"表は、ある小学校で好きな給食を調べた結果です。2番目に人数が多い給食をえらびましょう。","table":{"head":["給食","人数"],"rows":[["カレー","42人"],["あげパン","35人"],["ラーメン","28人"],["からあげ","25人"]]},"parts":[{"choices":["カレー","からあげ","あげパン","ラーメン"],"answer":2}],"explain":"多い順に、カレー42人、あげパン35人、ラーメン28人、からあげ25人です。"},{"id":"shiryo-1-b","field":"shiryo","level":1,"text":"表は、ある町の気温です。気温の上がり方がいちばん大きいのは、どの月からどの月の間でしょう。","table":{"head":["月","1月","4月","7月","10月"],"rows":[["気温","5度","15度","28度","18度"]]},"parts":[{"choices":["1月から4月","4月から7月","7月から10月"],"answer":1}],"explain":"1月→4月は10度、4月→7月は13度上がっています。7月→10月は10度下がっています。「差」を計算して比べましょう。"},{"id":"shiryo-2-a","field":"shiryo","level":2,"text":"表は、ある町の農業の生産額と、その内わけの割合です。表から正しく読み取れることをえらびましょう。","table":{"head":["年","生産額の合計","米","野菜","その他"],"rows":[["2000年","200億円","50%","30%","20%"],["2020年","150億円","40%","40%","20%"]]},"parts":[{"choices":["米の生産額は、2020年のほうが多い","野菜の生産額は、2020年のほうが少ない","野菜の生産額は、2000年と2020年で同じ","その他の生産額は、2020年のほうが多い"],"answer":2}],"explain":"野菜は 2000年が200億円の30% = 60億円、2020年が150億円の40% = 60億円で同じです。割合が増えても、合計が減ると量は増えないことがあります。"},{"id":"shiryo-2-b","field":"shiryo","level":2,"text":"表は、ある町の人口と、65歳以上の人の割合です。正しいものをえらびましょう。","table":{"head":["年","町の人口","65歳以上の人の割合"],"rows":[["1990年","50000人","10%"],["2020年","40000人","30%"]]},"parts":[{"choices":["65歳以上の人の数は、2020年のほうが少ない","65歳以上の人の数は、1990年の2.4倍になった","町の人口も、65歳以上の人の数も減った","2020年の65歳以上の人の数は3万人だ"],"answer":1}],"explain":"65歳以上の人は、1990年が50000 × 0.1 = 5000人、2020年が40000 × 0.3 = 12000人。12000 ÷ 5000 = 2.4倍です。"},{"id":"shiryo-3-a","field":"shiryo","level":3,"text":"表をもとに発表原稿を書きました。（A）（B）に入る言葉をそれぞれえらびましょう。","table":{"head":["年","1人が1年に食べる米の量（おおよそ）"],"rows":[["1965年","112kg"],["1990年","70kg"],["2020年","51kg"]]},"box":{"title":"発表原稿","text":"1965年から2020年までに、1人が1年に食べる米の量は（A）になりました。また、1990年から2020年までの減り方は、1965年から1990年までの減り方より（B）です。"},"parts":[{"label":"A","choices":["約2倍","ほぼ同じ","約半分","約4分の1"],"answer":2},{"label":"B","choices":["小さい","大きい","同じ"],"answer":0}],"explain":"（A）112kgの半分は56kgで、51kgはそれに近いので「約半分」。（B）1965→1990年は112 − 70 = 42kg、1990→2020年は70 − 51 = 19kg減っているので、あとのほうが減り方は小さいです。"},{"id":"seibutsu-1-a","field":"seibutsu","level":1,"text":"こん虫のあしは、ぜんぶで何本でしょう。","parts":[{"choices":["4本","8本","6本","10本"],"answer":2}],"explain":"こん虫の体は、頭・むね・はらの3つに分かれていて、むねにあしが6本あります。クモはあしが8本なので、こん虫ではありません。"},{"id":"seibutsu-1-b","field":"seibutsu","level":1,"text":"メダカのおすとめすを見分けるには、体のどこを見るとよいでしょう。","parts":[{"choices":["目の大きさ","口の形","体の色","せびれとしりびれの形"],"answer":3}],"explain":"おすは、せびれに切れこみがあり、しりびれが平行四辺形に近い形で大きいです。めすは、せびれに切れこみがなく、しりびれがおすより小さいです。"},{"id":"seibutsu-2-a","field":"seibutsu","level":2,"text":"種子が{発芽|はつが}するために必要な条件の組み合わせをえらびましょう。","parts":[{"choices":["水・{肥料|ひりょう}・日光","水・空気・適当な温度","日光・空気・土","肥料・土・水"],"answer":1}],"explain":"発芽には「水・空気・適当な温度」が必要です。日光や肥料は、発芽したあと大きく育つために必要になります。"},{"id":"seibutsu-2-b","field":"seibutsu","level":2,"text":"{心臓|しんぞう}から全身へ送り出される血液に多くふくまれ、体のすみずみに運ばれる気体をえらびましょう。","parts":[{"choices":["二酸化炭素","ちっ素","{酸素|さんそ}","水素"],"answer":2}],"explain":"肺で取りこんだ酸素は、血液によって心臓から全身に運ばれます。全身から心臓にもどってくる血液には、二酸化炭素が多くふくまれます。"},{"id":"seibutsu-3-a","field":"seibutsu","level":3,"text":"ある池では、水草を小さなエビが食べ、エビを魚が食べ、魚をサギ（鳥）が食べています。この池で水草が急に少なくなると、しばらくして起こると考えられることをえらびましょう。","parts":[{"choices":["魚が増え、サギも増える","エビが増え、そのあと魚も増える","エビが減り、そのあと魚も減る","サギだけが増える"],"answer":2}],"explain":"「食べる・食べられる」のつながりを{食物連鎖|しょくもつれんさ}といいます。水草が減るとエビのえさが減り、エビが減ると、エビを食べる魚のえさも減ります。"},{"id":"busshitsu-1-a","field":"busshitsu","level":1,"text":"ものが燃えるために必要な気体をえらびましょう。","parts":[{"choices":["ちっ素","酸素","二酸化炭素","水じょう気"],"answer":1}],"explain":"ものが燃えるには酸素が必要です。びんにふたをすると、中の酸素が少なくなって火が消えます。"},{"id":"busshitsu-1-b","field":"busshitsu","level":1,"text":"電気を通すものをえらびましょう。","parts":[{"choices":["木のわりばし","ゴムのわゴム","ガラスのコップ","鉄のくぎ"],"answer":3}],"explain":"鉄・銅・アルミニウムなどの金属は電気を通します。木・ゴム・ガラス・プラスチックは電気を通しません。"},{"id":"busshitsu-2-a","field":"busshitsu","level":2,"text":"かん電池2個を直列につなぐと、かん電池1個のときと比べて、豆電球の明るさはどうなるでしょう。","parts":[{"choices":["暗くなる","変わらない","明るくなる","つかなくなる"],"answer":2}],"explain":"直列つなぎにすると、流れる電流が大きくなるので明るくなります。並列つなぎにすると、明るさは1個のときとほぼ同じで、長い時間光ります。"},{"id":"busshitsu-2-b","field":"busshitsu","level":2,"text":"空気の中で、体積の割合がいちばん大きい気体と、その割合の組み合わせをえらびましょう。","parts":[{"choices":["酸素・約78%","ちっ素・約78%","酸素・約21%","ちっ素・約21%"],"answer":1}],"explain":"空気はおよそ、ちっ素78%・酸素21%・その他1%（二酸化炭素など）でできています。"},{"id":"busshitsu-3-a","field":"busshitsu","level":3,"text":"表は、水100mLにとける量です（この問題での値）。（A）（B）で、出てくるつぶの重さをそれぞれえらびましょう。\n（A）60℃の水100mLにミョウバン40gを全部とかし、20℃まで冷やした。\n（B）60℃の水100mLに食塩30gを全部とかし、20℃まで冷やした。","table":{"head":["水の温度","20℃","60℃"],"rows":[["食塩","36g","37g"],["ミョウバン","11g","57g"]]},"choices":["0g","11g","29g","40g"],"parts":[{"label":"A","answer":2},{"label":"B","answer":0}],"explain":"（A）20℃ではミョウバンは11gまでしかとけないので、40 − 11 = 29gがつぶになって出てきます。（B）食塩は20℃でも36gまでとけるので、30gは全部とけたまま。つぶは出てきません。"},{"id":"uchu-1-a","field":"uchu","level":1,"text":"太陽がのぼってくるのは、どの方角でしょう。","parts":[{"choices":["西","東","南","北"],"answer":1}],"explain":"太陽は東からのぼり、南の空を通って、西にしずみます。"},{"id":"uchu-1-b","field":"uchu","level":1,"text":"「夏の大三角」をつくる星ではないものをえらびましょう。","parts":[{"choices":["ベガ","デネブ","アルタイル","シリウス"],"answer":3}],"explain":"夏の大三角は、こと座のベガ、はくちょう座のデネブ、わし座のアルタイルの3つです。シリウスは冬の星（おおいぬ座）です。"},{"id":"uchu-2-a","field":"uchu","level":2,"text":"北の空の星は、北極星を中心に1時間でおよそ何度動いて見えるでしょう。","parts":[{"choices":["30度","45度","15度","60度"],"answer":2}],"explain":"星は1日（24時間）で1周（360度）動いて見えるので、1時間では 360 ÷ 24 = 15度です。"},{"id":"uchu-2-b","field":"uchu","level":2,"text":"夕方、南の空に、右半分が光っている半月が見えました。この月は、1週間ほどたつとどうなるでしょう。","parts":[{"choices":["新月に近づく","満月に近づく","形は変わらない","左半分が光る半月になる"],"answer":1}],"explain":"夕方に見える右半分が光る月（上弦の月）は、1週間ほどで満月になります。月は約30日で、新月→上弦→満月→下弦→新月と形を変えます。"},{"id":"uchu-3-a","field":"uchu","level":3,"text":"北の空で、午後8時に北極星の近くに見えた星を、午後11時にもう一度見ました。（A）（B）をそれぞれえらびましょう。\n（A）北極星を中心に動いた角度\n（B）北の空を見たときの、星の動く向き","parts":[{"label":"A","choices":["30度","45度","60度","90度"],"answer":1},{"label":"B","choices":["時計の針と同じ向き","時計の針と反対の向き"],"answer":1}],"explain":"（A）3時間で 15 × 3 = 45度動きます。（B）北の空の星は、北極星を中心に時計の針と反対の向きに回って見えます。"},{"id":"zukei-1-a","field":"zukei","level":1,"text":"たて6cm、横4cmの長方形の面積はいくつでしょう。","parts":[{"choices":["10cm²","20cm²","24cm²","48cm²"],"answer":2}],"explain":"長方形の面積 ＝ たて × 横 なので、6 × 4 = 24cm²です。10cmや20cmはまわりの長さとまちがえやすいので注意。"},{"id":"zukei-1-b","field":"zukei","level":1,"text":"たて5cm、横4cm、高さ3cmの直方体の体積はいくつでしょう。","parts":[{"choices":["60cm³","12cm³","120cm³","47cm³"],"answer":0}],"explain":"直方体の体積 ＝ たて × 横 × 高さ なので、5 × 4 × 3 = 60cm³です。"},{"id":"zukei-2-a","field":"zukei","level":2,"text":"直径10cmの円の、円周の長さはいくつでしょう。円周率は3.14とします。","parts":[{"choices":["15.7cm","31.4cm","62.8cm","78.5cm"],"answer":1}],"explain":"円周 ＝ 直径 × 3.14 なので、10 × 3.14 = 31.4cmです。半径（5cm）にかけないように注意しましょう。"},{"id":"zukei-2-b","field":"zukei","level":2,"text":"たて20cm、横30cmの直方体の水そうに、深さ10cmまで水が入っています。水は何Lでしょう。","parts":[{"choices":["60L","0.6L","6L","600L"],"answer":2}],"explain":"水の体積は 20 × 30 × 10 = 6000cm³。1L = 1000cm³ なので、6000 ÷ 1000 = 6Lです。"},{"id":"zukei-3-a","field":"zukei","level":3,"text":"陸上競技場のトラックは、長さ50mの直線部分が2本と、両はしの半径30mの半円でできています。円周率は3.14とします。\n（A）このトラック1周の長さ\n（B）1つ外側のレーン（半円の半径が31m）を走ると、1周で何m長くなるか","parts":[{"label":"A","choices":["194.2m","288.4m","376.8m","476.8m"],"answer":1},{"label":"B","choices":["約1m","約3.14m","約6.28m","約12.56m"],"answer":2}],"explain":"（A）半円2つで円1つ分。50 × 2 + 30 × 2 × 3.14 = 100 + 188.4 = 288.4m。（B）直線は同じなので、円周の差だけ。(31 − 30) × 2 × 3.14 = 6.28m。半径が1mふえると、円周は約6.28mふえます。"},{"id":"kisoku-1-a","field":"kisoku","level":1,"text":"数がきまりにしたがって並んでいます。□に入る数はいくつでしょう。\n2、5、8、11、□","parts":[{"choices":["13","15","14","16"],"answer":2}],"explain":"となりどうしの差はいつも3です。11 + 3 = 14。"},{"id":"kisoku-1-b","field":"kisoku","level":1,"text":"赤・青・黄の3色から、2色をえらびます。えらび方は何通りあるでしょう。","parts":[{"choices":["2通り","3通り","6通り","9通り"],"answer":1}],"explain":"「赤と青」「赤と黄」「青と黄」の3通りです。「赤と青」と「青と赤」は同じえらび方です。"},{"id":"kisoku-2-a","field":"kisoku","level":2,"text":"Aさん、Bさん、Cさんの3人が一列に並びます。並び方は何通りあるでしょう。","parts":[{"choices":["9通り","3通り","8通り","6通り"],"answer":3}],"explain":"先頭は3人のだれか（3通り）、2番目は残りの2人（2通り）、3番目は残りの1人。3 × 2 × 1 = 6通り。樹形図をかくと、もれなく数えられます。"},{"id":"kisoku-2-b","field":"kisoku","level":2,"text":"米だわらを、いちばん下の段に10こ、その上の段に9こ…と1こずつ減らして積み、いちばん上の段は1こにしました。米だわらはぜんぶで何こでしょう。","parts":[{"choices":["45こ","50こ","55こ","100こ"],"answer":2}],"explain":"1 + 2 + … + 10。同じ形をさかさまにしてくっつけると、どの段も11こで10段の長方形になります。11 × 10 ÷ 2 = 55こ。江戸時代の「和算」にも出てくる考え方です。"},{"id":"kisoku-3-a","field":"kisoku","level":3,"text":"大小2つのさいころを同時にふります。\n（A）出た目の数の和が8になる出方は何通り？\n（B）出た目の数の和が7になる出方は何通り？","choices":["4通り","5通り","6通り","7通り"],"parts":[{"label":"A","answer":1},{"label":"B","answer":2}],"explain":"（大, 小）で書き出します。和が8：(2,6)(3,5)(4,4)(5,3)(6,2) の5通り。和が7：(1,6)(2,5)(3,4)(4,3)(5,2)(6,1) の6通り。和が7がいちばん出やすい和です。"},{"id":"wariai-1-a","field":"wariai","level":1,"text":"1時間に4km進む速さで、2時間歩きました。何km進んだでしょう。","parts":[{"choices":["8km","2km","16km","6km"],"answer":0}],"explain":"1時間で4kmなので、2時間では 4 × 2 = 8kmです。"},{"id":"wariai-1-b","field":"wariai","level":1,"text":"1本120円のえんぴつを5本と、80円の消しゴムを1こ買いました。代金はいくらでしょう。","parts":[{"choices":["600円","680円","700円","760円"],"answer":1}],"explain":"えんぴつは 120 × 5 = 600円。消しゴムをたして 600 + 80 = 680円です。"},{"id":"wariai-2-a","field":"wariai","level":2,"text":"50mを10秒で走る人が、同じ速さで30m走ると、何秒かかるでしょう。","parts":[{"choices":["3秒","5秒","6秒","8秒"],"answer":2}],"explain":"1秒で 50 ÷ 10 = 5m 進みます。30mは 30 ÷ 5 = 6秒です。"},{"id":"wariai-2-b","field":"wariai","level":2,"text":"定価1000円の品物が、30%引きで売られています。売りねはいくらでしょう。","parts":[{"choices":["700円","300円","970円","1300円"],"answer":0}],"explain":"30%は 1000 × 0.3 = 300円。1000 − 300 = 700円です。「引いたあとのねだん」を聞かれていることに注意。"},{"id":"wariai-3-a","field":"wariai","level":3,"text":"水に食塩をとかした食塩水が200gあり、その中に食塩が10gとけています。\n（A）この食塩水の重さに対する、食塩の重さの割合\n（B）この食塩水を熱して、水だけを100g{蒸発|じょうはつ}させたあとの、食塩の割合","choices":["5%","10%","15%","20%"],"parts":[{"label":"A","answer":0},{"label":"B","answer":1}],"explain":"（A）10 ÷ 200 = 0.05 → 5%。（B）水が100g減ると食塩水は100g。食塩は10gのままなので、10 ÷ 100 = 0.1 → 10%。蒸発すると、こくなります。"},{"id":"ronri-1-a","field":"ronri","level":1,"text":"マス目のSからスタートして、右に2マス、上に1マス進みました。着いたマスの文字をえらびましょう。","grid":{"rows":[["あ","い","う"],["え","お","か"],["S","き","く"]]},"parts":[{"choices":["お","く","か","う"],"answer":2}],"explain":"Sから右に2マスで「く」、そこから上に1マスで「か」です。指でなぞってたしかめましょう。"},{"id":"ronri-1-b","field":"ronri","level":1,"text":"Aさん、Bさん、Cさん、Dさんの4人が一列に並んでいます。前から2番目はだれでしょう。","box":{"text":"・Aさんはいちばん前にいる。\n・Bさんは、Cさんのすぐ後ろにいる。\n・Dさんはいちばん後ろにいる。"},"parts":[{"choices":["Bさん","Cさん","Dさん"],"answer":1}],"explain":"Aがいちばん前、Dがいちばん後ろ。残りの2番目・3番目に「C→B」の順で入るので、A・C・B・D。2番目はCさんです。"},{"id":"ronri-2-a","field":"ronri","level":2,"text":"9時10分に家を出て、学校に向かいます。学校に着くのは何時何分でしょう。","box":{"text":"・家から駅まで、歩いて15分かかる。\n・駅から学校前まで、バスで20分かかる。\n・バスは、毎時00分と30分に駅を出発する。"},"parts":[{"choices":["9時45分","9時50分","10時00分","10時20分"],"answer":1}],"explain":"駅に着くのは 9時10分 + 15分 = 9時25分。次のバスは9時30分。20分乗って9時50分に着きます。バスを待つ時間をわすれないようにしましょう。"},{"id":"ronri-2-b","field":"ronri","level":2,"text":"ロボットは、R（右に1マス）、U（上に1マス）の命令で動きます。〔　〕△ は「〔　〕の中を△回くり返す」という意味です。\n「R→R→R→U→R→R→R→U」と同じ動きになる命令をえらびましょう。","parts":[{"choices":["〔R〕3→U→〔R〕3","〔R→U〕3","〔R〕6→〔U〕2","〔〔R〕3→U〕2"],"answer":3}],"explain":"「R→R→R→U」（＝〔R〕3→U）が2回くり返されています。だから〔〔R〕3→U〕2。〔R〕6→〔U〕2は、着く場所は同じでも、通る道がちがいます。"},{"id":"ronri-3-a","field":"ronri","level":3,"text":"たて3マス、横4マスのマップがあります。左下のマスからスタートし、次のプログラムで動きました（U＝上、D＝下、R＝右に1マス。〔　〕△は△回くり返し）。\n（A）通ったマスの数（スタートのマスもふくむ）\n（B）さいごに着いたマスの場所","box":{"title":"プログラム","text":"C1 ＝ 〔U〕2 → R → 〔D〕2 → R\nプログラム ＝ C1 → 〔U〕2 → R → 〔D〕2"},"parts":[{"label":"A","choices":["9マス","10マス","11マス","12マス"],"answer":3},{"label":"B","choices":["左上","右上","右下","左下"],"answer":2}],"explain":"1列目を上へ→2列目を下へ→3列目を上へ→4列目を下へ、と1列ずつ全部のマスを通ります。3 × 4 = 12マスを通り、さいごは右下に着きます。"},{"id":"jitsugi-1-a","field":"jitsugi","level":1,"text":"4分の4拍子の曲では、4分音符いくつ分で1小節になるでしょう。","parts":[{"choices":["2つ","3つ","4つ","8つ"],"answer":2}],"explain":"4分の4拍子は「4分音符を1拍として、1小節に4拍」という意味です。"},{"id":"jitsugi-1-b","field":"jitsugi","level":1,"text":"ごはんをたく前に、米をしばらく水につけておくのはなぜでしょう。","parts":[{"choices":["米の色を白くするため","米に水をすわせて、ふっくらたくため","米をつめたくするため","米を重くするため"],"answer":1}],"explain":"米に水をすわせておくと、しんまで火が通り、ふっくらとたき上がります。"},{"id":"jitsugi-2-a","field":"jitsugi","level":2,"text":"2分音符1つは、8分音符いくつ分の長さでしょう。","parts":[{"choices":["2つ","4つ","3つ","8つ"],"answer":1}],"explain":"2分音符 ＝ 4分音符2つ分、4分音符 ＝ 8分音符2つ分。だから 2 × 2 = 4つ分です。"},{"id":"jitsugi-2-b","field":"jitsugi","level":2,"text":"水泳の「けのび」で、遠くまで進むための姿勢をえらびましょう。","parts":[{"choices":["顔を前に上げて、背中を反らす","手足を大きく横に広げる","ひざを曲げて体をまるくする","体を一直線にのばし、あごを引く"],"answer":3}],"explain":"あごを引いてプールの底を見るようにし、体を一直線にのばすと、水の{抵抗|ていこう}が小さくなって遠くまで進みます。"},{"id":"jitsugi-3-a","field":"jitsugi","level":3,"text":"みそしるを作ります。①〜④を正しい順番に並べたとき、2番目と3番目にくるものの組み合わせをえらびましょう。","box":{"text":"① ふっとうしたら、切ったとうふとわかめを入れる。\n② なべに水とだしを入れて、火にかける。\n③ おわんにもりつけて、ねぎをちらす。\n④ 火を弱めて、みそをとかし入れる（みそを入れたらにたてない）。"},"parts":[{"choices":["2番目：④　3番目：①","2番目：①　3番目：④","2番目：②　3番目：③","2番目：③　3番目：①"],"answer":1}],"explain":"正しい順番は ②→①→④→③。みそはかおりがとばないように、最後のほうで火を弱めてから入れます。手順の問題は「〜したら」などの言葉が手がかりです。"}],"MOCKS":[{"id":"mock-1","title":"模試Ⅰ","minutes":45,"sections":[{"no":1,"intro":"ゆいさんは、自分が住んでいる町のお祭りについて調べました。あとの問いに答えなさい。","questions":[{"id":"mock-1-1-1","no":"(1)","field":"rekishi","text":"お正月の行事に関係の深いものを、次のアからオまでの中から二つ選びなさい。","parts":[{"choices":["{門松|かどまつ}","ささかざり","{鏡|かがみ}もち","こいのぼり","豆まき"],"answer":[0,2]}],"scoring":[{"parts":[0],"points":2,"perItem":1}],"explain":"門松と鏡もちはお正月のかざりです。ささかざりは七夕、こいのぼりは端午の節句、豆まきは節分の行事です。（どちらか一方で1点、二つともで2点）"},{"id":"mock-1-1-2","no":"(2)","field":"dokkai","text":"ゆいさんが書いた次の【文章】で、ゆいさんがいちばん伝えたいこととして最も適当なものを選びなさい。","box":{"title":"【文章】","text":"わたしの町の夏祭りは、二百年以上続いています。もともとは、田んぼの虫をおいはらい、{豊作|ほうさく}をいのる行事でした。今では、子どもみこしや屋台が出て、町の人たちが楽しみにしています。しかし、ここ数年、みこしをかつぐ人が足りなくなってきました。祭りを続けていくためには、若い人たちが参加しやすいくふうが必要だと、わたしは考えます。"},"parts":[{"choices":["祭りは二百年続いたので、もうやめてもよい","祭りを続けるには、若い人が参加しやすいくふうが必要だ","屋台をもっと増やすべきだ","豊作をいのる行事にもどすべきだ"],"answer":1}],"scoring":[{"parts":[0],"points":2}],"explain":"最後の「〜必要だと、わたしは考えます」に筆者の考えがあります。「しかし」のあとに問題点、そのあとに考えが書かれています。"},{"id":"mock-1-1-3","no":"(3)","field":"kotoba","text":"次の文の（A）と（B）に当てはまる言葉を、それぞれ選びなさい。","box":{"text":"祭りの日は朝から雨だった。（A）、たくさんの人が集まった。みこしは予定より早く出発した。（B）、夕方から雨が強くなりそうだったからだ。"},"choices":["しかし","なぜなら","だから","または"],"parts":[{"label":"A","answer":0},{"label":"B","answer":1}],"scoring":[{"parts":[0,1],"points":2}],"explain":"（A）雨なのに人が集まった → 予想と反対のことをつなぐ「しかし」。（B）文の終わりが「〜からだ」なので、理由をあとから言う「なぜなら」。（二つともできて2点）"},{"id":"mock-1-1-4","no":"(4)","field":"shiryo","text":"次の【表】は、祭りの来場者数です。【表】から読み取れることとして正しいものを選びなさい。","table":{"head":["年","2019年","2021年","2023年","2025年"],"rows":[["来場者数","8000人","2000人","6000人","9000人"]]},"parts":[{"choices":["2025年の来場者数は、2019年より2000人多い","2023年の来場者数は、2021年の2倍だ","来場者数は、毎回増え続けている","2021年の来場者数は、2019年の4分の1だった"],"answer":3}],"scoring":[{"parts":[0],"points":2}],"explain":"2000 ÷ 8000 = 4分の1。アは1000人多い、イは3倍、ウは2021年に減っているので正しくありません。"},{"id":"mock-1-1-5","no":"(5)","field":"chiri","text":"ゆいさんは、祭りの日に道路を使うため、市役所に相談しました。市のきまり（{条例|じょうれい}）を話し合って決めるところを選びなさい。","parts":[{"choices":["国会","市議会","裁判所","内閣"],"answer":1}],"scoring":[{"parts":[0],"points":2}],"explain":"市の条例は、市民の選挙でえらばれた議員が集まる市議会で決めます。国の法律を決めるのは国会です。"}]},{"no":2,"intro":"けんたさんの学級では、学校の花だんで植物を育てています。あとの問いに答えなさい。","questions":[{"id":"mock-1-2-1","no":"(1)","field":"seibutsu","text":"けんたさんは、インゲンマメの種子を使って、発芽の条件を調べる実験をしました。「水が発芽に必要か」を調べるには、どのカップとどのカップを比べればよいですか。","table":{"head":["カップ","水","空気","温度"],"rows":[["A","あたえる","ふれる","20℃"],["B","あたえない","ふれる","20℃"],["C","あたえる","ふれる","5℃"]]},"parts":[{"choices":["AとB","AとC","BとC"],"answer":0}],"scoring":[{"parts":[0],"points":2}],"explain":"調べたい条件（水）だけを変えて、ほかの条件（空気・温度）を同じにします。AとBは水だけがちがいます。"},{"id":"mock-1-2-2","no":"(2)","field":"busshitsu","text":"花だんに水をまくポンプを、かん電池2個で動かします。次の文の（A）と（B）に当てはまる言葉を、それぞれ選びなさい。","box":{"text":"ポンプを速く動かすには、かん電池を（A）つなぎにする。ポンプをできるだけ長い時間動かすには、かん電池を（B）つなぎにする。"},"choices":["直列","並列"],"parts":[{"label":"A","answer":0},{"label":"B","answer":1}],"scoring":[{"parts":[0,1],"points":2}],"explain":"直列つなぎは電流が大きくなり、速く動きます。並列つなぎは1個のときとほぼ同じ速さで、長い時間動きます。（二つともできて2点）"},{"id":"mock-1-2-3","no":"(3)","field":"zukei","text":"たて2m、横5mの長方形の花だんに、深さ20cmまで土を入れます。必要な土の体積を選びなさい。","parts":[{"choices":["0.2m³","2m³","20m³","200m³"],"answer":1}],"scoring":[{"parts":[0],"points":3}],"explain":"20cm = 0.2m に単位をそろえます。2 × 5 × 0.2 = 2m³。単位をそろえずに 2 × 5 × 20 = 200 としないように注意。"},{"id":"mock-1-2-4","no":"(4)","field":"wariai","text":"アサガオの種を40こまいたところ、32こが発芽しました。発芽した種の割合を選びなさい。","parts":[{"choices":["32%","75%","80%","85%"],"answer":2}],"scoring":[{"parts":[0],"points":2}],"explain":"32 ÷ 40 = 0.8 → 80%。もとにする量（まいた種40こ）でわります。"}]},{"no":3,"intro":"みなとさんたちは、校外学習で科学館へ行く計画を立てています。あとの問いに答えなさい。","questions":[{"id":"mock-1-3-1","no":"(1)","field":"ronri","text":"9時00分に学校を出発します。次の【メモ】をもとに、科学館に着く時刻として最も早いものを選びなさい。","box":{"title":"【メモ】","text":"・学校から駅まで、歩いて10分かかる。\n・駅から科学館前まで、電車で25分かかる。\n・電車は、9時05分、9時20分、9時35分、9時50分に駅を出発する。"},"parts":[{"choices":["9時35分","9時45分","10時00分","10時15分"],"answer":1}],"scoring":[{"parts":[0],"points":2}],"explain":"駅に着くのは9時10分なので、9時05分の電車には乗れません。9時20分の電車に乗り、25分後の9時45分に着きます。"},{"id":"mock-1-3-2","no":"(2)","field":"wariai","text":"6人で科学館に行きます。電車の運賃は子ども1人片道180円、科学館の入館料は子ども1人300円です。6人の行き帰りの電車代と入館料の合計を選びなさい。","parts":[{"choices":["2880円","3240円","3960円","4320円"],"answer":2}],"scoring":[{"parts":[0],"points":2}],"explain":"1人分は、電車の往復 180 × 2 = 360円 と入館料300円で660円。660 × 6 = 3960円。「行き帰り」を見落とすと2880円になります。"},{"id":"mock-1-3-3","no":"(3)","field":"uchu","text":"プラネタリウムで冬の星空を見ました。（A）と（B）に当てはまるものを、それぞれ選びなさい。\n（A）冬の夜、南の空に見える代表的な星座\n（B）（A）の星座の中にある、赤っぽい1等星","parts":[{"label":"A","choices":["さそり座","オリオン座","はくちょう座","こと座"],"answer":1},{"label":"B","choices":["リゲル","ベガ","ベテルギウス","デネブ"],"answer":2}],"scoring":[{"parts":[0],"points":1},{"parts":[1],"points":1}],"explain":"冬の代表はオリオン座。赤っぽいベテルギウスと、青白いリゲルがあります。さそり座は夏、はくちょう座・こと座も夏の星座です。（一つできるごとに1点）"},{"id":"mock-1-3-4","no":"(4)","field":"kisoku","text":"科学館のクイズに、次の数の並びが出ました。（A）と（B）に当てはまる数を、それぞれ選びなさい。\n1、3、6、10、15、（A）、…\n（B）この並びの10番目の数","parts":[{"label":"A","choices":["18","20","21","25"],"answer":2},{"label":"B","choices":["45","55","66","100"],"answer":1}],"scoring":[{"parts":[0],"points":1},{"parts":[1],"points":2}],"explain":"差が 2、3、4、5…と1ずつ増えます。（A）15 + 6 = 21。（B）続けると 28、36、45、55 で、10番目は55（1から10までの和）。（Aで1点、Bで2点）"},{"id":"mock-1-3-5","no":"(5)","field":"ronri","text":"科学館のロボットは、F（向いている方へ1マス進む）、R（その場で右を向く）、L（その場で左を向く）の命令で動きます。北を向いてスタートし、「F→F→R→F→R→F」と動いたあと、ロボットが向いている方角を選びなさい。","parts":[{"choices":["北","東","南","西"],"answer":2}],"scoring":[{"parts":[0],"points":2}],"explain":"北向き → R で東向き → R で南向き。Fは向きを変えないので、さいごは南を向いています。"}]}]},{"id":"mock-2","title":"模試Ⅱ","minutes":45,"sections":[{"no":1,"intro":"あおいさんの学級では、グループごとに江戸時代のくらしについて調べました。あとの問いに答えなさい。","questions":[{"id":"mock-2-1-1","no":"(1)","field":"chiri","text":"江戸時代の人々は、着物を古着屋で売り買いしたり、やぶれたところをつぎはぎしたりして、長く使い続けました。このことは、現代の3Rのどの考えに最も近いですか。","parts":[{"choices":["リデュース","リユース","リサイクル"],"answer":1}],"scoring":[{"parts":[0],"points":2}],"explain":"形を変えずにくり返し使うのはリユースです。とかしたり原料にもどしたりするのがリサイクルです。"},{"id":"mock-2-1-2","no":"(2)","field":"rekishi","text":"江戸時代に「三都」とよばれた、三つの大きな都市の組み合わせを選びなさい。","parts":[{"choices":["江戸・名古屋・仙台","京都・奈良・鎌倉","江戸・大阪・京都","大阪・博多・長崎"],"answer":2}],"scoring":[{"parts":[0],"points":2}],"explain":"江戸（政治の中心）、大阪（「天下の台所」とよばれた商業の中心）、京都（朝廷がある都）が三都です。"},{"id":"mock-2-1-3","no":"(3)","field":"kisoku","text":"和算の本に、米だわらの問題がありました。いちばん下の段に12こ、上の段ほど1こずつ少なく積み、いちばん上の段は5こです。（A）と（B）に当てはまる数を、それぞれ選びなさい。\n（A）米だわらの段の数\n（B）米だわらの数の合計","parts":[{"label":"A","choices":["7段","8段","9段","12段"],"answer":1},{"label":"B","choices":["60こ","68こ","136こ","144こ"],"answer":1}],"scoring":[{"parts":[0],"points":1},{"parts":[1],"points":2}],"explain":"（A）12、11、10、9、8、7、6、5 で8段（12 − 5 + 1 = 8）。（B）同じ形をさかさまにつなぐと、どの段も 12 + 5 = 17こで8段。17 × 8 ÷ 2 = 68こ。（Aで1点、Bで2点）"},{"id":"mock-2-1-4","no":"(4)","field":"kotoba","text":"あおいさんは、江戸時代から使われていることわざを調べました。「石の上にも三年」の意味として最も適当なものを選びなさい。","parts":[{"choices":["石は三年たつとあたたかくなる","つらくてもがまんして続ければ、いつかは成果が出る","三年間は何もしないほうがよい","失敗しても気にしなくてよい"],"answer":1}],"scoring":[{"parts":[0],"points":2}],"explain":"つめたい石の上でも三年すわり続ければあたたまる、ということから、しんぼう強く続ければ成果が出るという意味です。"},{"id":"mock-2-1-5","no":"(5)","field":"dokkai","text":"和紙について説明するために、①から④の文を正しい順番に並べます。2番目と4番目にくる文の組み合わせとして最も適当なものを選びなさい。","box":{"text":"① 和紙は、コウゾなどの木の皮のせんいから作られます。\n② そのため、千年以上前の文書が、今でも読める状態で残っているのです。\n③ このせんいは長くて強く、からみ合うことで、じょうぶな紙になります。\n④ また、和紙は光をやわらかく通すので、障子にも使われてきました。"},"parts":[{"choices":["2番目：②　4番目：④","2番目：③　4番目：②","2番目：④　4番目：②","2番目：③　4番目：④"],"answer":3}],"scoring":[{"parts":[0],"points":3}],"explain":"正しい順番は ①→③→②→④。③の「このせんい」は①の「せんい」を、②の「そのため」は③の「じょうぶ」を受けています。④の「また」は別の特ちょうをつけ加える言葉です。"}]},{"no":2,"intro":"だいちさんは、水のすがたの変化や雨について調べました。あとの問いに答えなさい。","questions":[{"id":"mock-2-2-1","no":"(1)","field":"busshitsu","text":"次の（A）と（B）に当てはまる温度を、それぞれ選びなさい。\n（A）水がこおり始める温度\n（B）水がふっとうする温度","choices":["0℃","4℃","50℃","100℃"],"parts":[{"label":"A","answer":0},{"label":"B","answer":3}],"scoring":[{"parts":[0],"points":1},{"parts":[1],"points":1}],"explain":"水は0℃でこおり始め、100℃でふっとうします。（どちらか一方で1点、二つともで2点）"},{"id":"mock-2-2-2","no":"(2)","field":"busshitsu","text":"水がこおって氷になると、体積はどうなりますか。","parts":[{"choices":["小さくなる","変わらない","大きくなる"],"answer":2}],"scoring":[{"parts":[0],"points":2}],"explain":"水は氷になると体積が約1.1倍に大きくなります。冬に水道管がこおってはれつすることがあるのはこのためです。"},{"id":"mock-2-2-3","no":"(3)","field":"wariai","text":"海水のかわりに、300gの食塩水を用意しました。この中に食塩が15gとけています。食塩水の重さに対する食塩の重さの割合を選びなさい。","parts":[{"choices":["3%","5%","15%","20%"],"answer":1}],"scoring":[{"parts":[0],"points":2}],"explain":"15 ÷ 300 = 0.05 → 5%。本物の海水も、およそ3〜4%の塩分がとけています。"},{"id":"mock-2-2-4","no":"(4)","field":"shiryo","text":"次の【表】は、ある地域の月ごとの雨の量です。【表】から読み取れることとして正しいものを選びなさい。","table":{"head":["月","6月","7月","8月","9月","12月"],"rows":[["雨の量","210mm","180mm","120mm","230mm","40mm"]]},"parts":[{"choices":["6月から8月にかけて、雨の量は増え続けた","7月と8月の合計は、9月より少ない","いちばん多い月といちばん少ない月の差は170mmだ","9月の雨の量は、12月の5倍以上だ"],"answer":3}],"scoring":[{"parts":[0],"points":2}],"explain":"40 × 5 = 200 で、9月の230mmはそれより多いので5倍以上。アは減り続けている、イは 180 + 120 = 300mm で9月より多い、ウは 230 − 40 = 190mm です。"},{"id":"mock-2-2-5","no":"(5)","field":"uchu","text":"日本の天気は、およそどの方角からどの方角へ変わっていくことが多いですか。","parts":[{"choices":["東から西","西から東","南から北","北から南"],"answer":1}],"scoring":[{"parts":[0],"points":2}],"explain":"日本の上空には西から東へふく風（{偏西風|へんせいふう}）があり、雲が西から東へ動くため、天気も西から東へ変わることが多いです。"}]},{"no":3,"intro":"ゆうなさんたちは、さいころやマス目を使ったゲームをしています。あとの問いに答えなさい。","questions":[{"id":"mock-2-3-1","no":"(1)","field":"kisoku","text":"大小2つのさいころを同時にふるとき、目の出方は全部で何通りありますか。","parts":[{"choices":["12通り","21通り","36通り","64通り"],"answer":2}],"scoring":[{"parts":[0],"points":2}],"explain":"大きいさいころの6通りそれぞれに、小さいさいころの6通りがあるので、6 × 6 = 36通り。"},{"id":"mock-2-3-2","no":"(2)","field":"kisoku","text":"大小2つのさいころを同時にふるとき、出た目の数の和が10以上になる出方は何通りありますか。","parts":[{"choices":["6通り","3通り","5通り","8通り"],"answer":0}],"scoring":[{"parts":[0],"points":3}],"explain":"（大, 小）で、和が10：(4,6)(5,5)(6,4)、和が11：(5,6)(6,5)、和が12：(6,6)。合わせて 3 + 2 + 1 = 6通り。"},{"id":"mock-2-3-3","no":"(3)","field":"ronri","text":"マス目のゲームでは、R（右に1マス）、U（上に1マス）の命令を使い、〔　〕△ で「〔　〕の中を△回くり返す」ことができます。「R→R→U→R→R→U→R→R→U」と同じ動きになる命令として最も適当なものを選びなさい。","parts":[{"choices":["〔R〕2→〔U〕3","〔R→R→U〕3","〔R→U〕3","〔R〕6→〔U〕3"],"answer":1}],"scoring":[{"parts":[0],"points":3}],"explain":"「R→R→U」が3回くり返されています。アとエは着く場所は同じでも、通る道がちがいます。ウは右に3マスしか進みません。"}]}]}],"SUBJECTS":[{"id":"kokugo","name":"国語","weight":24},{"id":"shakai","name":"社会","weight":20},{"id":"rika","name":"理科","weight":16},{"id":"sansu","name":"算数","weight":25},{"id":"kangaeru","name":"考える力","weight":15}],"FIELDS":[{"id":"kotoba","subject":"kokugo","name":"ことば","tips":["つなぎ言葉（だから・しかし・なぜなら）の前と後ろの関係を、声に出して確かめよう。","ことわざや慣用句を1日1つ、おうちの人に使ってみせよう。"],"parent":"会話の中でことわざ・敬語を自然に使う機会をつくると定着しやすいです。"},{"id":"dokkai","subject":"kokugo","name":"読解・まとめ","tips":["読んだ文章の「いちばん言いたいこと」を1文で言ってみよう。","答えをえらぶときは、本文のどこに書いてあるか指でさしてから決めよう。"],"parent":"本番は長い文章を45分で読みます。毎日10分の読書と、読んだ内容を一言で説明する習慣が効果的です。"},{"id":"rekishi","subject":"shakai","name":"歴史・文化","tips":["年中行事や昔の道具を、おうちの人やおじいちゃん・おばあちゃんに聞いてみよう。","歴史まんがで、時代の順番（縄文→平安→戦国→江戸→明治）をつかもう。"],"parent":"歴史は6年生で習います。4年生のうちは博物館・お祭り・歴史まんがで「時代の雰囲気」に触れておくと十分です。"},{"id":"chiri","subject":"shakai","name":"地理・くらし・政治","tips":["ニュースに出てきた県を地図帳でさがしてみよう。","ごみの分別やリサイクルなど、くらしのしくみを家で見つけよう。"],"parent":"地図帳をリビングに置き、ニュースや旅行の話題で地名を一緒に引くと覚えやすくなります。"},{"id":"shiryo","subject":"shakai","name":"資料・グラフ","tips":["グラフを見たら、まず「タイトル・たてじく・よこじく・単位」をたしかめよう。","「割合」と「量」はちがう。全体が変わると、割合が同じでも量は変わるよ。"],"parent":"本番では表やグラフの読み取りが毎年出ます。新聞やチラシのグラフを一緒に読み、「何が分かる？」と問いかけると力がつきます。"},{"id":"seibutsu","subject":"rika","name":"生き物・からだ","tips":["身近な虫や植物を観察して、気づいたことをメモしよう。","「食べる・食べられる」のつながりを図にかいてみよう。"],"parent":"メダカや植物の世話、図鑑での調べものなど、観察の体験がそのまま問題の理解につながります。"},{"id":"busshitsu","subject":"rika","name":"もの・電気","tips":["実験の問題は「何を変えて、何を同じにしたか」を書き出そう。","かん電池のつなぎ方（直列・並列）を、豆電球の明るさで覚えよう。"],"parent":"電磁石・燃焼・水溶液は5・6年生の内容です。科学館の実験教室や理科の実験キットで体験しておくと理解が早まります。"},{"id":"uchu","subject":"rika","name":"地球・宇宙","tips":["晴れた夜に星や月を見て、1時間後に位置がどう変わるか比べよう。","星は1時間に約15度動く（24時間で360度）と覚えよう。"],"parent":"星座早見やスマホの星空アプリで、実際の空と見比べる体験がおすすめです。"},{"id":"zukei","subject":"sansu","name":"図形・量","tips":["問題の図を自分でもかいて、長さや数字を書きこもう。","単位（cm・m・cm³・L）をそろえてから計算しよう。"],"parent":"体積・円周は5年生の内容です。4年生では面積と単位の換算をしっかり固めておくと後が楽になります。"},{"id":"kisoku","subject":"sansu","name":"きまり・場合の数","tips":["数の並びは、となりどうしの「差」を書き出すときまりが見つかるよ。","場合の数は、表や樹形図を使ってもれなく数えよう。"],"parent":"本番で配点が大きい分野です。すごろくやトランプなど数を扱う遊びも良い練習になります。"},{"id":"wariai","subject":"sansu","name":"速さ・割合","tips":["「はじき（速さ・時間・道のり）」の関係を、具体的な数で確かめよう。","割合は「もとにする量」を先に決めてから計算しよう。"],"parent":"割合・速さは5・6年生の内容です。4年生では買い物の計算やかけ算・わり算の正確さを優先してください。"},{"id":"ronri","subject":"kangaeru","name":"条件整理・プログラミング","tips":["条件は1つずつ書き出して、表にまとめてから考えよう。","プログラムの問題は、指やえんぴつで1マスずつ動かしてたしかめよう。"],"parent":"学年に関係なく伸ばせる分野です。パズルやプログラミング学習アプリ、時刻表を使った旅行計画などが効果的です。"},{"id":"jitsugi","subject":"kangaeru","name":"くらし・音楽・体育","tips":["料理のお手伝いで、作る順番を考えてみよう。","音楽で習った音符の長さを、手びょうしで確かめよう。"],"parent":"家庭科・音楽・体育の基礎知識も出題されます。お手伝いや学校の授業をていねいに取り組むことが一番の対策です。"}],"STATUS_LABEL":{"new":"まだ","weak":"にがて","almost":"もう少し","good":"とくい"},"GRADE_PLAN":[{"grade":"4年生（いま）","text":"★のドリルで毎日5問。読書と計算の正確さ、観察や体験を大切にする時期です。模試は★★がある程度できてから、時間を気にせず挑戦してみましょう。"},{"grade":"5年生","text":"割合・速さ・体積・電磁石・天気など、適性検査の中心になる内容を学校で習います。★★のドリルで学校の内容と結びつけ、模試をタイマーなしで解きましょう。"},{"grade":"6年生","text":"歴史・燃焼・水溶液などを習い、出題範囲がそろいます。★★★と模試を45分のタイマーで解き、時間配分を練習しましょう。公式サイトの本物の過去問にも取り組みましょう。"}]};
+// 採点・正答率・アドバイスの計算（DOMを使わない純粋関数）
+// build.mjs が "export " を取り除いて HTML に埋め込む。tools/check.mjs からは ES Module として読み込む。
+
+const KANA = ['ア', 'イ', 'ウ', 'エ', 'オ', 'カ', 'キ', 'ク', 'ケ', 'コ'];
+const RECENT_PER_FIELD = 12;
+
+// 空欄ひとつの正誤。pick の空欄は順不同の集合一致。
+function isPartCorrect(part, sel) {
+  if (Array.isArray(part.answer)) {
+    if (!Array.isArray(sel) || sel.length !== part.answer.length) return false;
+    return part.answer.every((a) => sel.includes(a));
+  }
+  return sel === part.answer;
+}
+
+// pick の空欄で正しく選べた数
+function countPickHits(part, sel) {
+  if (!Array.isArray(part.answer) || !Array.isArray(sel)) return 0;
+  return sel.slice(0, part.answer.length).filter((s) => part.answer.includes(s)).length;
+}
+
+// 問題1つの採点。sels は空欄ごとの選択（未回答は null / undefined）。
+function scoreQuestion(q, sels) {
+  const parts = q.parts.map((p, i) => isPartCorrect(p, sels ? sels[i] : undefined));
+  const groups = q.scoring || q.parts.map((_, i) => ({ parts: [i], points: 1 }));
+  let score = 0;
+  let max = 0;
+  for (const g of groups) {
+    max += g.points;
+    if (g.perItem) {
+      const i = g.parts[0];
+      const hits = countPickHits(q.parts[i], sels ? sels[i] : undefined);
+      score += Math.min(g.points, hits * g.perItem);
+    } else if (g.parts.every((i) => parts[i])) {
+      score += g.points;
+    }
+  }
+  return { score, max, parts, correct: score === max };
+}
+
+function isAnswered(q, sels) {
+  return q.parts.every((p, i) => {
+    const s = sels ? sels[i] : undefined;
+    if (Array.isArray(p.answer)) return Array.isArray(s) && s.length === p.answer.length;
+    return Number.isInteger(s);
+  });
+}
+
+// 分野ごとの最近の成績
+function fieldStats(attempts, fieldIds) {
+  const out = {};
+  for (const id of fieldIds) out[id] = { n: 0, s: 0, m: 0, rate: null, status: 'new' };
+  const sorted = [...attempts].sort((a, b) => (a.at < b.at ? 1 : a.at > b.at ? -1 : 0));
+  for (const a of sorted) {
+    const st = out[a.f];
+    if (!st || st.n >= RECENT_PER_FIELD) continue;
+    st.n += 1;
+    st.s += a.s;
+    st.m += a.m;
+  }
+  for (const id of fieldIds) {
+    const st = out[id];
+    if (st.m > 0) st.rate = st.s / st.m;
+    st.status = statusOf(st);
+  }
+  return out;
+}
+
+function statusOf(st) {
+  if (st.n < 2 || st.rate === null) return 'new';
+  if (st.rate < 0.5) return 'weak';
+  if (st.rate < 0.8) return 'almost';
+  return 'good';
+}
+
+// 分野ごとの本番での重み（教科の割合 ÷ 教科内の分野数）
+function fieldWeights(subjects, fields) {
+  const w = {};
+  for (const s of subjects) {
+    const fs = fields.filter((f) => f.subject === s.id);
+    for (const f of fs) w[f.id] = s.weight / fs.length;
+  }
+  return w;
+}
+
+// 次にやる分野（優先度 = 重み × (1 - 正答率)、未挑戦は正答率50%とみなす）
+function recommend(stats, weights, count = 3) {
+  return Object.keys(weights)
+    .map((id) => {
+      const st = stats[id];
+      const rate = st && st.status !== 'new' ? st.rate : 0.5;
+      return { id, priority: weights[id] * (1 - rate), n: st ? st.n : 0 };
+    })
+    .sort((a, b) => b.priority - a.priority || a.n - b.n || (a.id < b.id ? -1 : 1))
+    .slice(0, count);
+}
+
+// 模試の結果へのひとこと（合格ラインではなく目標として）
+function mockComment(score, max, unanswered) {
+  const rate = max ? score / max : 0;
+  const lines = [];
+  if (rate >= 0.7) lines.push('目標の7割をこえたよ。まちがえた問題の解説を読んで、満点をめざそう。');
+  else if (rate >= 0.5) lines.push('半分以上とれたね。あと少しで目標の7割。にがてな分野をドリルで練習しよう。');
+  else lines.push('むずかしい問題が多かったね。まずは★と★★のドリルで、分野ごとの力をつけよう。');
+  if (unanswered >= 2) lines.push(`答えていない問題が${unanswered}問あったよ。わからない問題はとばして、さいごにもどってくると時間をうまく使えるよ。`);
+  return lines;
+}
+
+// ドリルの出題（最近まちがえた問題 → 未挑戦 → 正解した問題 の順、同じ順位の中はランダム）
+function pickDrill(questions, filter, attempts, rng = Math.random, size = 5) {
+  const match = (q) =>
+    (!filter.field || q.field === filter.field) && (!filter.fields || filter.fields.includes(q.field));
+  const last = {};
+  const sorted = [...attempts].sort((a, b) => (a.at < b.at ? -1 : a.at > b.at ? 1 : 0));
+  for (const a of sorted) last[a.q] = a.s === a.m;
+  const rank = (q) => (last[q.id] === false ? 0 : last[q.id] === undefined ? 1 : 2);
+  const chosen = [];
+  for (let lv = filter.level; lv >= 1 && chosen.length < size; lv--) {
+    const pool = questions
+      .filter((q) => q.level === lv && match(q) && !chosen.includes(q))
+      .map((q) => ({ q, r: rank(q), x: rng() }))
+      .sort((a, b) => a.r - b.r || a.x - b.x)
+      .map((o) => o.q);
+    chosen.push(...pool.slice(0, size - chosen.length));
+  }
+  return chosen;
+}
+
+// 記録の形を確かめ、壊れていれば null
+function normalizeStore(raw) {
+  if (!raw || typeof raw !== 'object' || raw.version !== 1) return null;
+  const attempts = Array.isArray(raw.attempts)
+    ? raw.attempts.filter(
+        (a) => a && typeof a.q === 'string' && typeof a.f === 'string' && Number.isFinite(a.s) && Number.isFinite(a.m) && typeof a.at === 'string'
+      )
+    : [];
+  const mocks = Array.isArray(raw.mocks)
+    ? raw.mocks.filter((m) => m && typeof m.id === 'string' && Number.isFinite(m.score) && Number.isFinite(m.max))
+    : [];
+  return {
+    version: 1,
+    name: typeof raw.name === 'string' ? raw.name.slice(0, 10) : '',
+    furigana: raw.furigana !== false,
+    stars: Number.isFinite(raw.stars) && raw.stars >= 0 ? Math.floor(raw.stars) : 0,
+    attempts: attempts.slice(-2000),
+    mocks: mocks.slice(-50),
+  };
+}
+
+// てきせい検査ドリル：画面の描画と操作
+// DATA（問題・分野）と scoring.mjs の関数は、ビルド時に同じ <script> の前のほうへ埋め込まれる。
+
+const { DRILL, MOCKS, SUBJECTS, FIELDS, STATUS_LABEL, GRADE_PLAN } = DATA;
+const FIELD = Object.fromEntries(FIELDS.map((f) => [f.id, f]));
+const SUBJ = Object.fromEntries(SUBJECTS.map((s) => [s.id, s]));
+const FIELD_IDS = FIELDS.map((f) => f.id);
+const WEIGHTS = fieldWeights(SUBJECTS, FIELDS);
+const LEVELS = [
+  { lv: 1, stars: '★', label: '4年生' },
+  { lv: 2, stars: '★★', label: '5年生' },
+  { lv: 3, stars: '★★★', label: '本番' },
+];
+const STORE_KEY = 'tekisei-drill-v1';
+
+// ───────── 記録の保存（localStorage が使えないときはメモリだけ） ─────────
+let storageOK = true;
+function defaultStore() {
+  return { version: 1, name: '', furigana: true, stars: 0, attempts: [], mocks: [] };
+}
+function loadStore() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    localStorage.setItem(STORE_KEY + '-probe', '1');
+    localStorage.removeItem(STORE_KEY + '-probe');
+    if (!raw) return defaultStore();
+    return normalizeStore(JSON.parse(raw)) || defaultStore();
+  } catch (e) {
+    storageOK = false;
+    return defaultStore();
+  }
+}
+function save() {
+  if (!storageOK) return;
+  try {
+    store.attempts = store.attempts.slice(-2000);
+    store.mocks = store.mocks.slice(-50);
+    localStorage.setItem(STORE_KEY, JSON.stringify(store));
+  } catch (e) {
+    storageOK = false;
+  }
+}
+let store = loadStore();
+
+// ───────── 画面の状態 ─────────
+let selLevel = 1;
+let drill = null; // { qs, i, sels, checked, results, title, filter }
+let mockSetup = { id: MOCKS[0].id, timed: true };
+let mock = null; // { exam, sels, timed, endAt, startedAt, result }
+let modal = null; // { text, yes, no, onYes }
+let timerId = null;
+
+// ───────── 文字の組み立て ─────────
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+// {漢字|かんじ} → <ruby>
+function rb(s) {
+  return esc(s).replace(/\{([^|{}]+)\|([^{}]+)\}/g, '<ruby>$1<rt>$2</rt></ruby>');
+}
+function paras(s) {
+  return String(s).split('\n').map((line) => `<p>${rb(line)}</p>`).join('');
+}
+function pct(r) {
+  return r === null || r === undefined ? '―' : Math.round(r * 100) + '%';
+}
+function subjOf(fieldId) {
+  return SUBJ[FIELD[fieldId].subject];
+}
+function cvar(subjectId) {
+  return `--c: var(--c-${subjectId})`;
+}
+
+// 案内役「ピコ」（まるい鳥）
+function pico(mood = 'happy') {
+  const eye = mood === 'think'
+    ? '<path d="M38 50 q5 -4 10 0 M62 50 q5 -4 10 0" stroke="#1d2f44" stroke-width="4" fill="none" stroke-linecap="round"/>'
+    : '<circle cx="43" cy="50" r="5.5" fill="#1d2f44"/><circle cx="67" cy="50" r="5.5" fill="#1d2f44"/><circle cx="45" cy="48" r="1.8" fill="#fff"/><circle cx="69" cy="48" r="1.8" fill="#fff"/>';
+  const beak = mood === 'cheer'
+    ? '<path d="M48 60 h14 l-7 12 z" fill="#ff7a59"/><path d="M48 60 h14 l-7 -5 z" fill="#e8603f"/>'
+    : '<path d="M49 59 h12 l-6 8 z" fill="#ff7a59"/>';
+  const extra = mood === 'cheer'
+    ? '<path d="M8 40 l8 4 M10 26 l8 8 M100 40 l-8 4 M98 26 l-8 8" stroke="#ffc83d" stroke-width="4" stroke-linecap="round"/>'
+    : '';
+  return `<svg class="pico" viewBox="0 0 110 110" aria-hidden="true">${extra}
+    <ellipse cx="55" cy="104" rx="26" ry="4" fill="rgba(0,0,0,.08)"/>
+    <path d="M30 22 q8 -14 18 -4 q6 -10 14 2" fill="#2a86d6"/>
+    <circle cx="55" cy="58" r="40" fill="#ffc83d"/>
+    <ellipse cx="55" cy="74" rx="24" ry="20" fill="#fff4cf"/>
+    <path d="M16 62 q-8 10 4 18 q6 -8 4 -18 z" fill="#f0a91d"/><path d="M94 62 q8 10 -4 18 q-6 -8 -4 -18 z" fill="#f0a91d"/>
+    <circle cx="34" cy="63" r="5" fill="#ff9e8a" opacity=".6"/><circle cx="76" cy="63" r="5" fill="#ff9e8a" opacity=".6"/>
+    ${eye}${beak}</svg>`;
+}
+
+// ───────── 問題の表示 ─────────
+function materialHTML(q) {
+  let h = '';
+  if (q.table) {
+    h += `<div class="tablewrap"><table class="data"><thead><tr>${q.table.head.map((c) => `<th scope="col">${rb(c)}</th>`).join('')}</tr></thead><tbody>${q.table.rows
+      .map((r) => `<tr>${r.map((c) => `<td>${rb(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  }
+  if (q.grid) {
+    h += `<table class="grid" aria-label="マス目"><tbody>${q.grid.rows
+      .map((r) => `<tr>${r.map((c) => `<td class="${c === 'S' ? 's' : ''}">${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  }
+  if (q.box) {
+    h += `<div class="box">${q.box.title ? `<div class="bt">${rb(q.box.title)}</div>` : ''}${paras(q.box.text)}</div>`;
+  }
+  return h;
+}
+
+function choicesOf(q, p) {
+  return p.choices || q.choices;
+}
+
+// sels: 空欄ごとの選択。review: 答え合わせ後（正誤の色を付ける）
+function partsHTML(q, sels, { review = false, scope = 'drill' } = {}) {
+  return q.parts.map((p, pi) => {
+    const cs = choicesOf(q, p);
+    const sel = sels[pi];
+    const isPick = Array.isArray(p.answer);
+    const short = cs.every((c) => c.replace(/\{([^|{}]+)\|[^{}]+\}/g, '$1').length <= 9);
+    const head = p.label || isPick
+      ? `<div class="row">${p.label ? `<span class="part-label">（${esc(p.label)}）</span>` : ''}${isPick ? `<span class="part-hint">${p.answer.length}つえらぼう</span>` : ''}</div>`
+      : '';
+    const btns = cs.map((c, ci) => {
+      const chosen = isPick ? Array.isArray(sel) && sel.includes(ci) : sel === ci;
+      const isAns = isPick ? p.answer.includes(ci) : p.answer === ci;
+      let cls = 'choice';
+      let mark = '';
+      if (review) {
+        if (isAns) { cls += ' correct'; mark = chosen ? '○' : 'せいかい'; }
+        else if (chosen) { cls += ' wrong'; mark = '×'; }
+      }
+      const label = `${KANA[ci]}　${c.replace(/\{([^|{}]+)\|[^{}]+\}/g, '$1')}`;
+      return `<button type="button" class="${cls}" data-act="choose" data-scope="${scope}" data-q="${esc(q.id)}" data-p="${pi}" data-c="${ci}" aria-pressed="${chosen}" aria-label="${esc(label)}" ${review ? 'disabled' : ''}>
+        <span class="k">${KANA[ci]}</span><span class="ct">${rb(c)}</span>${mark ? `<span class="mark">${mark}</span>` : ''}</button>`;
+    }).join('');
+    return `<div class="part">${head}<div class="choices${short ? ' short' : ''}">${btns}</div></div>`;
+  }).join('');
+}
+
+function setChoice(sels, q, pi, ci) {
+  const p = q.parts[pi];
+  if (Array.isArray(p.answer)) {
+    const cur = Array.isArray(sels[pi]) ? [...sels[pi]] : [];
+    const at = cur.indexOf(ci);
+    if (at >= 0) cur.splice(at, 1);
+    else {
+      cur.push(ci);
+      if (cur.length > p.answer.length) cur.shift();
+    }
+    sels[pi] = cur;
+  } else {
+    sels[pi] = sels[pi] === ci ? undefined : ci;
+  }
+}
+
+function answerText(q, sels) {
+  return q.parts.map((p, pi) => {
+    const s = sels[pi];
+    const v = Array.isArray(s) ? (s.length ? s.map((i) => KANA[i]).join('・') : '―') : Number.isInteger(s) ? KANA[s] : '―';
+    return (p.label ? `${p.label}：` : '') + v;
+  }).join('　');
+}
+function correctText(q) {
+  return q.parts.map((p) => (p.label ? `${p.label}：` : '') + (Array.isArray(p.answer) ? p.answer.map((i) => KANA[i]).join('・') : KANA[p.answer])).join('　');
+}
+
+function burst() {
+  return `<span class="burst" aria-hidden="true">${[[-60, -40], [60, -46], [-70, 20], [70, 24], [0, -64], [-30, 56], [34, 58]]
+    .map(([x, y], i) => `<i style="--x:${x}px; --y:${y}px; animation-delay:${i * 40}ms"></i>`).join('')}</span>`;
+}
+
+// ───────── 画面：ホーム ─────────
+function viewHome() {
+  const stats = fieldStats(store.attempts, FIELD_IDS);
+  const top = recommend(stats, WEIGHTS, 1)[0];
+  const f = FIELD[top.id];
+  const tried = store.attempts.length > 0;
+  const name = store.name ? `${esc(store.name)}さん、` : '';
+  const msg = tried
+    ? `${name}今日もいっしょにがんばろう！おすすめは「${esc(f.name)}」だよ。`
+    : `${name}はじめまして！ピコだよ。まずは★のドリルを5問やってみよう。`;
+  const lv = levelFor(stats[top.id]);
+  return `
+  <section class="card hello">
+    ${pico('happy')}
+    <div class="stack">
+      <div class="bubble">${msg}</div>
+      <div class="row"><span class="eyebrow">あつめた星</span><span class="starcount">★ ${store.stars}</span></div>
+    </div>
+  </section>
+  <section class="card stack" style="${cvar(f.subject)}">
+    <span class="eyebrow">きょうのおすすめ</span>
+    <div class="row"><span class="tag" style="${tried ? cvar(f.subject) : '--c: var(--sun)'}">${tried ? esc(SUBJ[f.subject].name) : 'ぜんぶの教科'}</span><h2>${tried ? esc(f.name) : 'おまかせドリル'}</h2></div>
+    <button class="btn sun wide" type="button" data-act="${tried ? 'drill-field' : 'drill-start'}" data-f="${tried ? top.id : 'all'}" data-lv="${lv}">${LEVELS[lv - 1].stars} 5問やってみる</button>
+  </section>
+  <nav class="menu" aria-label="メニュー">
+    <button class="menu-btn" style="--c: var(--sky)" type="button" data-act="go" data-v="drill"><span class="t">分野ドリル</span><span class="d">教科と★をえらんで、5問ずつ。すぐに答え合わせ。</span></button>
+    <button class="menu-btn" style="--c: var(--coral)" type="button" data-act="go" data-v="mock"><span class="t">本番そっくり模試</span><span class="d">本番と同じ45分・30点。週末にちょうせん。</span></button>
+    <button class="menu-btn" style="--c: var(--ok)" type="button" data-act="go" data-v="record"><span class="t">せいせき・アドバイス</span><span class="d">にがてな分野と、つぎにやることが分かるよ。</span></button>
+  </nav>
+  ${storageOK ? '' : '<p class="notice">この画面では記録がのこりません。とじると星や成績が消えます。</p>'}
+  <section class="card stack small">
+    <span class="eyebrow">保護者の方へ</span>
+    <p>愛知県立中高一貫校の適性検査（令和7・8年）の出題形式を参考にした、オリジナル問題のドリルです。本物の過去問は掲載していません。</p>
+    <p class="muted">記録はこの端末のブラウザの中だけに保存され、外部には送信されません。別の端末やブラウザでは記録は共有されません。</p>
+  </section>`;
+}
+
+function levelFor(st) {
+  if (!st || st.status === 'new' || st.status === 'weak') return 1;
+  return st.status === 'almost' ? 2 : 3;
+}
+
+// ───────── 画面：ドリルをえらぶ ─────────
+function viewDrillSelect() {
+  const stats = fieldStats(store.attempts, FIELD_IDS);
+  const seg = LEVELS.map((l) => `<button type="button" data-act="level" data-lv="${l.lv}" aria-pressed="${selLevel === l.lv}"><span class="stars">${l.stars}</span>${l.label}</button>`).join('');
+  const cards = SUBJECTS.map((s) => {
+    const fs = FIELDS.filter((f) => f.subject === s.id);
+    return `<button type="button" class="subject" style="${cvar(s.id)}" data-act="drill-start" data-s="${s.id}">
+      <span class="name">${esc(s.name)}</span>
+      <ul>${fs.map((f) => `<li><span>${esc(f.name)}</span><span>${pct(stats[f.id].rate)}</span></li>`).join('')}</ul>
+    </button>`;
+  }).join('');
+  return `
+  <section class="card stack">
+    <h1>分野ドリル</h1>
+    <p class="muted small">むずかしさをえらんでから、教科をおしてね。1回5問だよ。</p>
+    <div class="seg" role="group" aria-label="むずかしさ">${seg}</div>
+  </section>
+  <section class="subjects">
+    ${cards}
+    <button type="button" class="subject" style="--c: var(--sun)" data-act="drill-start" data-s="all">
+      <span class="name">おまかせ</span><ul><li><span>ぜんぶの分野からランダム</span></li></ul>
+    </button>
+  </section>
+  <button class="btn ghost" type="button" data-act="go" data-v="home">ホームにもどる</button>`;
+}
+
+function startDrill(filter, title) {
+  const qs = pickDrill(DRILL, filter, store.attempts);
+  if (!qs.length) return;
+  drill = { qs, i: 0, sels: [], checked: false, results: [], title, filter };
+  go('drill');
+}
+
+// ───────── 画面：もんだい（ドリル） ─────────
+function viewDrillQuestion() {
+  const q = drill.qs[drill.i];
+  const f = FIELD[q.field];
+  const s = subjOf(q.field);
+  const sels = drill.sels;
+  const ready = isAnswered(q, sels);
+  let fb = '';
+  if (drill.checked) {
+    const r = drill.results[drill.i];
+    fb = `<section class="feedback ${r.correct ? 'ok' : 'ng'}" role="status">
+      <div style="position:relative">${pico(r.correct ? 'cheer' : 'think')}${r.correct ? burst() : ''}</div>
+      <div class="stack">
+        <div class="verdict">${r.correct ? '○ せいかい！' : r.score > 0 ? '△ おしい！' : '× ざんねん'}</div>
+        <p class="small"><b>こたえ：</b>${correctText(q)}</p>
+        <div>${paras(q.explain)}</div>
+      </div>
+    </section>
+    <button class="btn sun wide" type="button" data-act="drill-next">${drill.i + 1 < drill.qs.length ? 'つぎの問題へ' : 'けっかを見る'}</button>`;
+  }
+  return `
+  <section class="card stack">
+    <div class="progress"><span class="display">${drill.i + 1} / ${drill.qs.length}</span><div class="bar" aria-hidden="true"><i style="width:${((drill.i + (drill.checked ? 1 : 0)) / drill.qs.length) * 100}%"></i></div>
+      <button class="btn ghost" type="button" data-act="drill-quit" style="min-height:44px;padding:6px 14px;font-size:15px">やめる</button></div>
+    <div class="row"><span class="tag" style="${cvar(s.id)}">${esc(s.name)}・${esc(f.name)}</span><span class="tag" style="--c: var(--sun)">${LEVELS[q.level - 1].stars} ${LEVELS[q.level - 1].label}</span></div>
+    <div class="qtext">${paras(q.text)}</div>
+    ${materialHTML(q)}
+    ${partsHTML(q, sels, { review: drill.checked, scope: 'drill' })}
+    ${drill.checked ? '' : `<button class="btn wide" type="button" data-act="drill-check" ${ready ? '' : 'disabled'}>こたえあわせ</button>`}
+  </section>
+  ${fb}`;
+}
+
+function viewDrillResult() {
+  const n = drill.qs.length;
+  const ok = drill.results.filter((r) => r.correct).length;
+  const all = ok === n;
+  const msg = all ? 'ぜんぶせいかい！すごい！ボーナスの星を2つあげるね。' : ok >= n / 2 ? 'よくがんばったね！まちがえた問題は、次にまた出てくるよ。' : 'むずかしかったね。解説を読んだから、次はきっとできるよ。';
+  return `
+  <section class="card hello">
+    <div style="position:relative">${pico(all ? 'cheer' : 'happy')}${all ? burst() : ''}</div>
+    <div class="stack">
+      <div class="bigscore">${ok}<small> / ${n}問 せいかい</small></div>
+      <div class="bubble">${msg}</div>
+      <div class="row"><span class="eyebrow">もらった星</span><span class="starcount">★ ${ok + (all ? 2 : 0)}</span></div>
+    </div>
+  </section>
+  <section class="card stack">
+    <h2>ふりかえり</h2>
+    <ul class="reslist">${drill.qs.map((q, i) => {
+      const r = drill.results[i];
+      return `<li style="${cvar(FIELD[q.field].subject)}"><span class="om ${r.correct ? 'o' : 'x'}">${r.correct ? '○' : '×'}</span><span class="tag" style="${cvar(FIELD[q.field].subject)}">${esc(FIELD[q.field].name)}</span><span class="small">${LEVELS[q.level - 1].stars}</span></li>`;
+    }).join('')}</ul>
+  </section>
+  <div class="row">
+    <button class="btn sun" type="button" data-act="drill-again">もう一回</button>
+    <button class="btn ghost" type="button" data-act="go" data-v="drill">ドリルをえらぶ</button>
+    <button class="btn ghost" type="button" data-act="nav-home">ホーム</button>
+  </div>`;
+}
+
+// ───────── 画面：本番そっくり模試 ─────────
+function allMockQs(exam) {
+  return exam.sections.flatMap((s) => s.questions);
+}
+function viewMockStart() {
+  const cards = MOCKS.map((m) => {
+    const hist = store.mocks.filter((h) => h.id === m.id);
+    const best = hist.length ? Math.max(...hist.map((h) => h.score)) : null;
+    const pressed = mockSetup.id === m.id;
+    return `<button type="button" class="choice" data-act="mock-pick" data-id="${m.id}" aria-pressed="${pressed}">
+      <span class="k">${m.id === 'mock-1' ? 'Ⅰ' : 'Ⅱ'}</span><span class="ct"><b>${esc(m.title)}</b>（30点・${allMockQs(m).length}問）<br><span class="small muted">${best === null ? 'まだ解いていない' : `さいこう ${best}点（${hist.length}回）`}</span></span></button>`;
+  }).join('');
+  return `
+  <section class="card stack">
+    <h1>本番そっくり模試</h1>
+    <p>本番の適性検査と同じように、大問3つ・30点で、すべて記号でこたえます。部分点のつけ方も本番と同じだよ。</p>
+    <p class="muted small">解いているあいだは答え合わせをしません。さいごに「ていしゅつ」すると、点数と解説が見られます。</p>
+    <div class="choices">${cards}</div>
+    <div class="seg" role="group" aria-label="タイマー" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      <button type="button" data-act="mock-timer" data-t="1" aria-pressed="${mockSetup.timed}"><span class="stars">⏱</span>45分タイマーあり</button>
+      <button type="button" data-act="mock-timer" data-t="0" aria-pressed="${!mockSetup.timed}"><span class="stars">∞</span>時間を気にしない</button>
+    </div>
+    <p class="muted small">4年生は「時間を気にしない」で、ていねいに解くのがおすすめ。6年生になったら45分で練習しよう。</p>
+    <button class="btn sun wide" type="button" data-act="mock-start">はじめる</button>
+  </section>
+  <button class="btn ghost" type="button" data-act="nav-home">ホームにもどる</button>`;
+}
+
+function fmtTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${m}:${String(s).padStart(2, '0')}`;
+}
+function mockLeft() {
+  return Math.max(0, Math.ceil((mock.endAt - Date.now()) / 1000));
+}
+function mockAnsweredCount() {
+  return allMockQs(mock.exam).filter((q) => isAnswered(q, mock.sels[q.id] || [])).length;
+}
+
+function viewMockRun() {
+  const exam = mock.exam;
+  const total = allMockQs(exam).length;
+  const left = mock.timed ? mockLeft() : null;
+  const secs = exam.sections.map((s) => `
+    <section class="card stack">
+      <div class="section-head"><span class="section-no">${s.no}</span><div class="qtext">${paras(s.intro)}</div></div>
+      ${s.questions.map((q) => `
+        <div class="mq stack" id="q-${esc(q.id)}">
+          <div class="qtext"><span class="qno">${esc(q.no)}</span>${paras(q.text)}</div>
+          ${materialHTML(q)}
+          ${partsHTML(q, mock.sels[q.id] || [], { scope: 'mock' })}
+        </div>`).join('')}
+    </section>`).join('');
+  return `
+  <div class="timerbar${left !== null && left <= 300 ? ' low' : ''}" id="timerbar">
+    <span>${esc(exam.title)}　<span class="small muted">こたえた数 <b id="answered">${mockAnsweredCount()}</b> / ${total}</span></span>
+    <span class="time" id="timer" aria-label="のこり時間">${left === null ? '∞' : fmtTime(left)}</span>
+  </div>
+  ${secs}
+  <button class="btn sun wide" type="button" data-act="mock-submit">ていしゅつする</button>
+  <button class="btn ghost" type="button" data-act="mock-quit">とちゅうでやめる</button>`;
+}
+
+function submitMock() {
+  stopTimer();
+  const exam = mock.exam;
+  const at = new Date().toISOString();
+  let score = 0;
+  let max = 0;
+  let unanswered = 0;
+  const perQ = {};
+  const perSection = exam.sections.map((s) => {
+    let ss = 0;
+    let sm = 0;
+    for (const q of s.questions) {
+      const sels = mock.sels[q.id] || [];
+      const r = scoreQuestion(q, sels);
+      if (!isAnswered(q, sels)) unanswered += 1;
+      perQ[q.id] = r;
+      ss += r.score;
+      sm += r.max;
+      store.attempts.push({ q: q.id, f: q.field, s: r.score, m: r.max, at, mode: 'mock' });
+    }
+    score += ss;
+    max += sm;
+    return { no: s.no, score: ss, max: sm };
+  });
+  const sec = mock.timed ? Math.round((Date.now() - mock.startedAt) / 1000) : null;
+  store.mocks.push({ id: exam.id, score, max, unanswered, at, sec });
+  store.stars += Math.floor(score / 3);
+  save();
+  mock.result = { score, max, unanswered, perQ, perSection };
+  window.scrollTo(0, 0);
+  render();
+}
+
+function viewMockResult() {
+  const exam = mock.exam;
+  const r = mock.result;
+  const byField = {};
+  for (const q of allMockQs(exam)) {
+    const x = (byField[q.field] = byField[q.field] || { s: 0, m: 0 });
+    x.s += r.perQ[q.id].score;
+    x.m += r.perQ[q.id].max;
+  }
+  const weakFields = Object.entries(byField).filter(([, v]) => v.s / v.m < 0.5).map(([id]) => FIELD[id].name);
+  const comments = mockComment(r.score, r.max, r.unanswered);
+  if (weakFields.length) comments.push(`点がとれなかった分野：${weakFields.join('、')}。分野ドリルで練習しよう。`);
+  const good = r.score / r.max >= 0.7;
+  return `
+  <section class="card hello">
+    <div style="position:relative">${pico(good ? 'cheer' : 'happy')}${good ? burst() : ''}</div>
+    <div class="stack">
+      <span class="eyebrow">${esc(exam.title)}のけっか</span>
+      <div class="bigscore">${r.score}<small> / ${r.max}点</small></div>
+      <p class="small muted">こたえなかった問題：${r.unanswered}問　もらった星：★ ${Math.floor(r.score / 3)}</p>
+    </div>
+  </section>
+  <section class="card stack">
+    <h2>ピコからのアドバイス</h2>
+    <ul>${comments.map((c) => `<li>${esc(c)}</li>`).join('')}</ul>
+    <p class="muted small">※ 合格点は公表されていません。「7割」はこのアプリでの目標です。</p>
+  </section>
+  <section class="card stack">
+    <h2>大問ごとの点</h2>
+    <div class="stats3">${r.perSection.map((s) => `<div class="stat"><b>${s.score}<span> / ${s.max}</span></b><span>大問${s.no}</span></div>`).join('')}</div>
+    <h3>分野ごと</h3>
+    <div class="fieldbars">${Object.entries(byField).map(([id, v]) => `
+      <div class="fb-row" style="${cvar(FIELD[id].subject)}"><span>${esc(FIELD[id].name)}</span><div class="bar"><i style="width:${(v.s / v.m) * 100}%"></i></div><span class="small">${v.s} / ${v.m}点</span></div>`).join('')}</div>
+  </section>
+  <section class="card stack">
+    <h2>答えと解説</h2>
+    ${exam.sections.map((s) => s.questions.map((q) => {
+      const qr = r.perQ[q.id];
+      const sels = mock.sels[q.id] || [];
+      return `<details class="review">
+        <summary><span class="om ${qr.correct ? 'o' : qr.score > 0 ? '' : 'x'}">${qr.correct ? '○' : qr.score > 0 ? '△' : '×'}</span>大問${s.no} ${esc(q.no)}<span class="tag" style="${cvar(FIELD[q.field].subject)}">${esc(FIELD[q.field].name)}</span><span class="pts">${qr.score}/${qr.max}点</span></summary>
+        <div class="stack">
+          <div class="qtext">${paras(q.text)}</div>
+          ${materialHTML(q)}
+          ${partsHTML(q, sels, { review: true, scope: 'mock' })}
+          <p class="small"><b>あなたの答え：</b>${answerText(q, sels)}　<b>こたえ：</b>${correctText(q)}</p>
+          <div class="box">${paras(q.explain)}</div>
+        </div>
+      </details>`;
+    }).join('')).join('')}
+  </section>
+  <div class="row">
+    <button class="btn sun" type="button" data-act="go" data-v="record">せいせきを見る</button>
+    <button class="btn ghost" type="button" data-act="mock-new">別の模試をえらぶ</button>
+    <button class="btn ghost" type="button" data-act="nav-home">ホーム</button>
+  </div>`;
+}
+
+function startTimer() {
+  stopTimer();
+  if (!mock || !mock.timed || mock.result) return;
+  timerId = setInterval(() => {
+    if (!mock || mock.result) return stopTimer();
+    const left = mockLeft();
+    const t = document.getElementById('timer');
+    const bar = document.getElementById('timerbar');
+    if (t) t.textContent = fmtTime(left);
+    if (bar) bar.classList.toggle('low', left <= 300);
+    if (left <= 0) {
+      modal = null;
+      submitMock();
+    }
+  }, 1000);
+}
+function stopTimer() {
+  if (timerId) clearInterval(timerId);
+  timerId = null;
+}
+
+// ───────── 画面：せいせき・アドバイス ─────────
+function viewRecord() {
+  const stats = fieldStats(store.attempts, FIELD_IDS);
+  const sumS = store.attempts.reduce((a, x) => a + x.s, 0);
+  const sumM = store.attempts.reduce((a, x) => a + x.m, 0);
+  const best = store.mocks.length ? Math.max(...store.mocks.map((m) => m.score)) : null;
+  const recs = recommend(stats, WEIGHTS, 3);
+  const recHTML = recs.map((r, i) => {
+    const f = FIELD[r.id];
+    const st = stats[r.id];
+    const sw = SUBJ[f.subject].weight;
+    const why = st.status === 'new'
+      ? `まだあまり解いていない分野だよ。本番では${esc(SUBJ[f.subject].name)}が全体の約${sw}%出ているよ。`
+      : `正答率は${pct(st.rate)}。本番では${esc(SUBJ[f.subject].name)}が全体の約${sw}%出ているよ。`;
+    const lv = levelFor(st);
+    return `<article class="rec" style="${cvar(f.subject)}">
+      <div class="row"><span class="tag" style="${cvar(f.subject)}">${i + 1}ばん</span><h3>${esc(f.name)}</h3><span class="pill ${st.status}">${STATUS_LABEL[st.status]}</span></div>
+      <p class="small">${why}</p>
+      <ul>${f.tips.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+      <p class="parent">保護者の方へ：${esc(f.parent)}</p>
+      <button class="btn" type="button" data-act="drill-field" data-f="${r.id}" data-lv="${lv}">${LEVELS[lv - 1].stars} この分野を5問やる</button>
+    </article>`;
+  }).join('');
+  const bars = SUBJECTS.map((s) => `
+    <div class="fb-sub" style="${cvar(s.id)}">
+      <span class="tag" style="${cvar(s.id)}; align-self:flex-start">${esc(s.name)}</span>
+      ${FIELDS.filter((f) => f.subject === s.id).map((f) => {
+        const st = stats[f.id];
+        return `<div class="fb-row"><span>${esc(f.name)}</span><div class="bar" role="img" aria-label="${esc(f.name)} 正答率 ${pct(st.rate)}"><i style="width:${(st.rate || 0) * 100}%"></i></div><span class="pill ${st.status}">${STATUS_LABEL[st.status]}</span></div>`;
+      }).join('')}
+    </div>`).join('');
+  const hist = store.mocks.slice(-10).reverse();
+  return `
+  <section class="card stack">
+    <h1>せいせき・アドバイス</h1>
+    <div class="stats3">
+      <div class="stat"><b>${store.attempts.length}</b><span>といた問題</span></div>
+      <div class="stat"><b>${pct(sumM ? sumS / sumM : null)}</b><span>ぜんたいの正答率</span></div>
+      <div class="stat"><b>${best === null ? '―' : best + '点'}</b><span>模試のさいこう点</span></div>
+    </div>
+    ${store.attempts.length ? '' : '<p class="bubble">まだ記録がないよ。まずは★のドリルを5問やってみよう。</p>'}
+  </section>
+  <section class="card stack">
+    <h2>つぎにやる分野</h2>
+    <p class="muted small">本番でよく出る分野と、いまの正答率から決めています（それぞれの分野の新しい12問で計算）。</p>
+    ${recHTML}
+  </section>
+  <section class="card stack">
+    <h2>分野ごとの正答率</h2>
+    <p class="muted small">まだ＝2問未満、にがて＝50%未満、もう少し＝80%未満、とくい＝80%以上</p>
+    <div class="fieldbars">${bars}</div>
+  </section>
+  <section class="card stack">
+    <h2>合格に向けた見通し（保護者の方へ）</h2>
+    <div class="plan">${GRADE_PLAN.map((g) => `<div><b>${esc(g.grade)}</b><p class="small">${esc(g.text)}</p></div>`).join('')}</div>
+  </section>
+  ${hist.length ? `<section class="card stack"><h2>模試の記録</h2><div class="tablewrap"><table class="hist"><thead><tr><th>日にち</th><th>模試</th><th>点数</th><th>未回答</th><th>時間</th></tr></thead><tbody>${hist.map((h) => {
+    const m = MOCKS.find((x) => x.id === h.id);
+    const d = new Date(h.at);
+    return `<tr><td>${d.getMonth() + 1}/${d.getDate()}</td><td>${esc(m ? m.title : h.id)}</td><td>${h.score} / ${h.max}</td><td>${h.unanswered}</td><td>${h.sec ? fmtTime(h.sec) : '―'}</td></tr>`;
+  }).join('')}</tbody></table></div></section>` : ''}
+  <section class="card stack">
+    <h2>せってい</h2>
+    <label class="row" for="nickname"><span>ニックネーム（本名は入れないでね）</span></label>
+    <div class="row"><input id="nickname" type="text" maxlength="10" value="${esc(store.name)}" autocomplete="off"><button class="btn ghost" type="button" data-act="save-name">ほぞん</button></div>
+    <p class="muted small">記録はこの端末のブラウザだけに保存されています。${storageOK ? '' : '<b>いまの画面では保存できません。</b>'}</p>
+    <button class="btn ghost" type="button" data-act="reset" style="align-self:flex-start">記録をぜんぶけす</button>
+  </section>
+  <button class="btn ghost" type="button" data-act="nav-home">ホームにもどる</button>`;
+}
+
+// ───────── 確認ダイアログ（ブラウザのダイアログは使えないので画面内に出す） ─────────
+function renderModal() {
+  const root = document.getElementById('modal-root');
+  if (!modal) {
+    root.innerHTML = '';
+    return;
+  }
+  root.innerHTML = `<div class="modal-back"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-t">
+    <p id="modal-t">${esc(modal.text)}</p>
+    <div class="row"><button class="btn ghost" type="button" data-act="modal-no">${esc(modal.no)}</button><button class="btn sun" type="button" data-act="modal-yes">${esc(modal.yes)}</button></div>
+  </div></div>`;
+  root.querySelector('[data-act="modal-no"]').focus();
+}
+function confirmBox(text, yes, no, onYes) {
+  modal = { text, yes, no, onYes };
+  renderModal();
+}
+
+// ───────── 描画とルーティング ─────────
+// 画面は変数で持つ。ハッシュは「書ければ書く」補助（表示環境によっては書き換えられないため）
+function viewFromHash() {
+  let h = '';
+  try { h = location.hash.replace('#', ''); } catch (e) { h = ''; }
+  return ['drill', 'mock', 'record'].includes(h) ? h : 'home';
+}
+let view = viewFromHash();
+function currentView() {
+  return view;
+}
+let lastView = null;
+function render() {
+  const v = currentView();
+  document.body.classList.toggle('no-furi', !store.furigana);
+  const ft = document.getElementById('furi-toggle');
+  ft.setAttribute('aria-pressed', String(store.furigana));
+  let html;
+  if (v === 'drill') {
+    if (drill && drill.i < drill.qs.length) html = viewDrillQuestion();
+    else if (drill) html = viewDrillResult();
+    else html = viewDrillSelect();
+  } else if (v === 'mock') {
+    if (mock && mock.result) html = viewMockResult();
+    else if (mock) html = viewMockRun();
+    else html = viewMockStart();
+  } else if (v === 'record') html = viewRecord();
+  else html = viewHome();
+  document.getElementById('app').innerHTML = html;
+  if (v !== lastView) window.scrollTo(0, 0);
+  lastView = v;
+  renderModal();
+}
+
+function go(v) {
+  view = ['drill', 'mock', 'record'].includes(v) ? v : 'home';
+  try {
+    if (location.hash !== '#' + view) location.hash = view;
+  } catch (e) { /* ハッシュが書けない環境では何もしない */ }
+  render();
+}
+
+function inProgress() {
+  if (drill && drill.i < drill.qs.length && (drill.i > 0 || drill.checked)) return 'drill';
+  if (mock && !mock.result) return 'mock';
+  return null;
+}
+
+function navHome() {
+  const p = inProgress();
+  if (p === 'mock') {
+    confirmBox('模試をとちゅうでやめますか？ここまでの答えは記録されません。', 'やめる', 'つづける', () => { stopTimer(); mock = null; go('home'); });
+  } else if (p === 'drill') {
+    confirmBox('ドリルをとちゅうでやめますか？答え合わせした問題は記録されています。', 'やめる', 'つづける', () => { drill = null; go('home'); });
+  } else {
+    if (drill && drill.i >= drill.qs.length) drill = null;
+    if (mock && mock.result) mock = null;
+    drill = drill && drill.i === 0 && !drill.checked ? null : drill;
+    go('home');
+  }
+}
+
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('[data-act]');
+  if (!el || el.disabled) return;
+  const act = el.dataset.act;
+  switch (act) {
+    case 'nav-home': return navHome();
+    case 'go': {
+      if (el.dataset.v === 'drill' && drill && drill.i >= drill.qs.length) drill = null;
+      if (el.dataset.v === 'record' && mock && mock.result) mock = null;
+      return go(el.dataset.v);
+    }
+    case 'furigana':
+      store.furigana = !store.furigana;
+      save();
+      return render();
+    case 'level':
+      selLevel = Number(el.dataset.lv);
+      return render();
+    case 'drill-start': {
+      const s = el.dataset.s || el.dataset.f;
+      if (el.dataset.lv) selLevel = Number(el.dataset.lv);
+      if (s === 'all') return startDrill({ level: selLevel }, 'おまかせ');
+      const fields = FIELDS.filter((f) => f.subject === s).map((f) => f.id);
+      return startDrill({ fields, level: selLevel }, SUBJ[s].name);
+    }
+    case 'drill-field': {
+      const lv = Number(el.dataset.lv) || 1;
+      selLevel = lv;
+      if (el.dataset.f === 'all') return startDrill({ level: lv }, 'おまかせ');
+      return startDrill({ field: el.dataset.f, level: lv }, FIELD[el.dataset.f].name);
+    }
+    case 'choose': {
+      const scope = el.dataset.scope;
+      const pi = Number(el.dataset.p);
+      const ci = Number(el.dataset.c);
+      if (scope === 'drill' && drill && !drill.checked) {
+        setChoice(drill.sels, drill.qs[drill.i], pi, ci);
+        render();
+      } else if (scope === 'mock' && mock && !mock.result) {
+        const q = allMockQs(mock.exam).find((x) => x.id === el.dataset.q);
+        const sels = (mock.sels[q.id] = mock.sels[q.id] || []);
+        setChoice(sels, q, pi, ci);
+        // 模試は画面全体を描き直さず、その問題のボタンだけ更新する（スクロール位置を保つ）
+        const box = document.getElementById('q-' + q.id);
+        box.querySelectorAll('.part').forEach((p) => p.remove());
+        box.insertAdjacentHTML('beforeend', partsHTML(q, sels, { scope: 'mock' }));
+        const btn = box.querySelector(`[data-p="${pi}"][data-c="${ci}"]`);
+        if (btn) btn.focus({ preventScroll: true });
+        document.getElementById('answered').textContent = mockAnsweredCount();
+      }
+      return;
+    }
+    case 'drill-check': {
+      const q = drill.qs[drill.i];
+      const r = scoreQuestion(q, drill.sels);
+      drill.results[drill.i] = r;
+      drill.checked = true;
+      store.attempts.push({ q: q.id, f: q.field, s: r.score, m: r.max, at: new Date().toISOString(), mode: 'drill' });
+      if (r.correct) store.stars += 1;
+      save();
+      render();
+      const fb = document.querySelector('.feedback');
+      if (fb) fb.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });
+      return;
+    }
+    case 'drill-next':
+      drill.i += 1;
+      drill.sels = [];
+      drill.checked = false;
+      if (drill.i >= drill.qs.length && drill.results.every((r) => r.correct)) {
+        store.stars += 2;
+        save();
+      }
+      window.scrollTo(0, 0);
+      return render();
+    case 'drill-quit':
+      if (drill.i === 0 && !drill.checked) {
+        drill = null;
+        return go('drill');
+      }
+      return confirmBox('ドリルをとちゅうでやめますか？答え合わせした問題は記録されています。', 'やめる', 'つづける', () => { drill = null; render(); });
+    case 'drill-again':
+      return startDrill(drill.filter, drill.title);
+    case 'mock-pick':
+      mockSetup.id = el.dataset.id;
+      return render();
+    case 'mock-timer':
+      mockSetup.timed = el.dataset.t === '1';
+      return render();
+    case 'mock-start': {
+      const exam = MOCKS.find((m) => m.id === mockSetup.id);
+      mock = { exam, sels: {}, timed: mockSetup.timed, startedAt: Date.now(), endAt: Date.now() + exam.minutes * 60 * 1000, result: null };
+      window.scrollTo(0, 0);
+      render();
+      return startTimer();
+    }
+    case 'mock-submit': {
+      const total = allMockQs(mock.exam).length;
+      const left = total - mockAnsweredCount();
+      if (left > 0) return confirmBox(`まだ${left}問こたえていない問題があります。ていしゅつしますか？`, 'ていしゅつする', 'もどる', submitMock);
+      return confirmBox('ていしゅつしますか？ていしゅつすると答えを変えられません。', 'ていしゅつする', 'もどる', submitMock);
+    }
+    case 'mock-quit':
+      return confirmBox('模試をとちゅうでやめますか？ここまでの答えは記録されません。', 'やめる', 'つづける', () => { stopTimer(); mock = null; render(); });
+    case 'mock-new':
+      mock = null;
+      return render();
+    case 'save-name': {
+      const v = document.getElementById('nickname').value.trim().slice(0, 10);
+      store.name = v;
+      save();
+      return render();
+    }
+    case 'reset':
+      return confirmBox('星・成績・模試の記録をぜんぶけします。もとにもどせません。けしますか？', 'ぜんぶけす', 'やめる', () => {
+        store = { ...defaultStore(), furigana: store.furigana };
+        drill = null;
+        mock = null;
+        save();
+        render();
+      });
+    case 'modal-yes': {
+      const fn = modal && modal.onYes;
+      modal = null;
+      renderModal();
+      if (fn) fn();
+      return;
+    }
+    case 'modal-no':
+      modal = null;
+      return renderModal();
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modal) {
+    modal = null;
+    renderModal();
+  }
+  if (e.key === 'Enter' && e.target && e.target.id === 'nickname') {
+    document.querySelector('[data-act="save-name"]').click();
+  }
+});
+
+window.addEventListener('hashchange', () => {
+  const v = viewFromHash();
+  if (v === view) return;
+  // ブラウザの「もどる」で模試の途中から離れたときはタイマーを止める
+  if (view === 'mock' && mock && !mock.result) { stopTimer(); mock = null; }
+  view = v;
+  render();
+});
+document.getElementById('brand-pico').innerHTML = pico('happy');
+render();
+
+</script>
+</body>
+</html>
